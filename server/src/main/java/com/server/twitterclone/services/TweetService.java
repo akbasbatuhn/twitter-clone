@@ -5,10 +5,12 @@ import com.server.twitterclone.entities.User;
 import com.server.twitterclone.repos.TweetRepository;
 import com.server.twitterclone.request.TweetCreateRequest;
 import com.server.twitterclone.request.TweetUpdateRequest;
+import com.server.twitterclone.responses.TweetResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TweetService {
@@ -21,11 +23,15 @@ public class TweetService {
         this.userService = userService;
     }
 
-    public List<Tweet> getAllTweets(Optional<Long> userId) {
+    public List<TweetResponse> getAllTweets(Optional<Long> userId) {
+        List<Tweet> tweetList;
         if(userId.isPresent()) {
-            return tweetRepository.findByUserId(userId.get());
+            tweetList = tweetRepository.findByUserId(userId.get());
+        } else {
+            tweetList = tweetRepository.findAll();
         }
-        return tweetRepository.findAll();
+
+        return tweetList.stream().map(tweet -> new TweetResponse(tweet)).collect(Collectors.toList());
     }
 
     public Tweet createTweet(TweetCreateRequest newTweetRequest) {
