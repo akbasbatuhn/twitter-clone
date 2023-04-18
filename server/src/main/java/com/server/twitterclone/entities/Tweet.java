@@ -21,9 +21,10 @@ public class Tweet {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     User user;
-
+    /*
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     Date date;
+     */
     @Lob
     @Column(columnDefinition = "text")
     String text;
