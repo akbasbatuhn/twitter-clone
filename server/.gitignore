@@ -34,5 +34,5 @@ build/
 
 .DS_Store
 
-env.properties
+src/main/resources/env.properties
 
