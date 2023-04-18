@@ -1,11 +1,9 @@
 package com.server.twitterclone.controllers;
 
 import com.server.twitterclone.entities.Comment;
-import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.request.CommentCreateRequest;
 import com.server.twitterclone.request.CommentUpdateRequest;
 import com.server.twitterclone.services.CommentService;
-import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
