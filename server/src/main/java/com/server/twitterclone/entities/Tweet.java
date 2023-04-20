@@ -14,6 +14,7 @@ import java.util.Date;
 @Data
 public class Tweet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
