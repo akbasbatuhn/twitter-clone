@@ -11,8 +11,8 @@ import {
     MoreIcon,
     TweetIcon,
 } from "../../icons/icon";
-import SideLink from "../sidelinks/side-link.component";
-import UserBox from "../sidelinks/user-box.component";
+import SideLink from "../sidelinks/SideLink";
+import UserBox from "../sidelinks/UserBox";
 
 const sideLinks = [
     {

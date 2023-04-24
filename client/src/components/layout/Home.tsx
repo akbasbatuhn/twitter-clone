@@ -1,6 +1,6 @@
-import Content from "./content.component";
-import Sidebar from "./sidebar.component";
-import Widgets from "./widgets.component";
+import Content from "./Content";
+import Sidebar from "./Sidebar";
+import Widgets from "./Widgets";
 
 const Home = () => {
     return (
