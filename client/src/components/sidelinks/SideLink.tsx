@@ -14,15 +14,11 @@ const SideLink: React.FC<ISideLinkProps> = ({
     onMenuItemClick,
 }) => {
     const isActive = active === name;
-    const handleClick = (e: any) => {
-        e.preventDefault();
-        onMenuItemClick(name);
-    };
 
     return (
-        <li className="group" onClick={handleClick}>
+        <li className="group" onClick={() => onMenuItemClick(name)}>
             <a
-                href={`${name.toLowerCase()}`}
+                href={name.toLowerCase()}
                 className="cursor-pointer block text-xl mb-2"
             >
                 <div className="inline-block">

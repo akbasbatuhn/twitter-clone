@@ -10,7 +10,7 @@ import {
     ProfileIcon,
     MoreIcon,
     TweetIcon,
-} from "../../icons/icon";
+} from "../../icons/Icons";
 import SideLink from "../sidelinks/SideLink";
 import UserBox from "../sidelinks/UserBox";
 
