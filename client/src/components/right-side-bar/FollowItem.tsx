@@ -2,7 +2,7 @@ import React from "react";
 
 const FollowItem = () => {
     return (
-        <div className="flex flex-col hover:bg-gray-100">
+        <div className="flex flex-col hover:bg-gray-100 p-1.5">
             <div className="flex space-x-20 pl-2 py-2.5">
                 <div className="flex space-x-4">
                     <img

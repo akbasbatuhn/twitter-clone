@@ -3,9 +3,11 @@ import TrendItem from "../right-side-bar/TrendItem";
 
 const Trends = () => {
     return (
-        <div>
-            <div className="bg-gray-50 flex flex-col space-y-6 p-4 rounded-2xl">
+        <div className="bg-gray-50 flex flex-col space-y-4 rounded-2xl">
+            <div className="mt-4 ml-3">
                 <span className="font-extrabold text-2xl">Trends For You</span>
+            </div>
+            <div>
                 <TrendItem
                     trendText="Trending in Turkey"
                     title="#Izmir"
