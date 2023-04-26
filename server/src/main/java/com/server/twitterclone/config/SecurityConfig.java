@@ -21,6 +21,8 @@ import com.server.twitterclone.security.JwtAuthenticationEntryPoint;
 import com.server.twitterclone.security.JwtAuthenticationFilter;
 import com.server.twitterclone.services.UserDetailsServiceImpl;
 
+import java.util.Collections;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
@@ -48,12 +50,13 @@ public class SecurityConfig{
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("HEAD");
@@ -75,7 +78,7 @@ public class SecurityConfig{
                 .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.GET, "/posts")
+                        .requestMatchers(HttpMethod.GET, "/tweets")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/comments")
                         .permitAll()
