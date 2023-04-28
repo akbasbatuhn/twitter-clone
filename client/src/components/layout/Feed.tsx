@@ -1,60 +1,27 @@
-import React, { useState, useEffect } from "react";
-
-import Tweet, { TweetProps } from "../tweets/Tweet";
+import FeedContent from "./FeedContent";
+import TweetBox from "./TweetBox";
 
 const Feed = () => {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [postList, setPostList] = useState([]);
-
-    useEffect(() => {
-        fetch("/api/tweets")
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setPostList(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                    console.log(error);
-                }
-            );
-    }, []);
-
-    // if (error) {
-    //     return <div>Error!!!</div>;
-    // } else if (!isLoaded) {
-    //     return <div>Loading...</div>;
-    // } else {
-    //     return (
-    //         <ul>
-    //             {postList.map((tweet: TweetProps) => (
-    //                 <Tweet key={tweet.id} text={tweet.text} id={tweet.id} />
-    //             ))}
-    //         </ul>
-    //     );
-    // }
-
     return (
-        <div>
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-        </div>
+        <main className="flex flex-col border-r border-l mr-4 w-full">
+            <header
+                className="sticky top-0 z-10 flex p-4 border-t border-b 
+            border-gray-extraLight bg-white"
+            >
+                <span className="font-bold text-xl text-gray-900 bg-transparent">
+                    Home
+                </span>
+            </header>
+            <div className="flex space-x-4 px-4 py-3 border-b border-x-gray-extraLight">
+                <img
+                    src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                    alt=""
+                    className="w-11 h-11 rounded-full"
+                />
+                <TweetBox />
+            </div>
+            <FeedContent />
+        </main>
     );
 };
 

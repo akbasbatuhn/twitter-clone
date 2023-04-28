@@ -1,4 +1,3 @@
-import React from "react";
 import FollowItem from "../right-side-bar/FollowItem";
 
 const WhoToFollow = () => {

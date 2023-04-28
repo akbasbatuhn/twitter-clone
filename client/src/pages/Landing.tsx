@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import LandingImage from "../components/layout/LandingImage";
-import LandingAuth from "../components/layout/LandingAuth";
+import LandingImage from "../components/landing/LandingImage";
+import LandingAuth from "../components/landing/LandingAuth";
+
 import Login from "../components/modals/Login";
+import Register from "../components/modals/Register";
 
 import { TwitterIcon } from "../icons/Icons";
-import Register from "../components/modals/Register";
 
 const Landing = () => {
     const [isLoginActive, setLoginActive] = useState(false);

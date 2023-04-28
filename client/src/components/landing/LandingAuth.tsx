@@ -1,5 +1,3 @@
-import React from "react";
-
 import { TwitterIcon } from "../../icons/Icons";
 
 interface UserAuthProps {

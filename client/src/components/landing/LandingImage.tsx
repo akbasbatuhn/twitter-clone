@@ -1,5 +1,3 @@
-import React from "react";
-
 import landingPageImage from "../../assets/landing-page-image.png";
 
 const LandingImage = () => {

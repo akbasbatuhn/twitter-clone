@@ -1,4 +1,5 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 interface ISideLinkProps {
     name: string;
@@ -17,8 +18,13 @@ const SideLink: React.FC<ISideLinkProps> = ({
 
     return (
         <li className="group" onClick={() => onMenuItemClick(name)}>
-            <a
-                href={name.toLowerCase()}
+            <Link
+                to={
+                    name.toLowerCase() === "twitterblue" ||
+                    name.toLowerCase() === "more"
+                        ? ""
+                        : `/${name.toLowerCase()}`
+                }
                 className="cursor-pointer block text-xl mb-2"
             >
                 <div className="inline-block">
@@ -34,7 +40,7 @@ const SideLink: React.FC<ISideLinkProps> = ({
                         </span>
                     </div>
                 </div>
-            </a>
+            </Link>
         </li>
     );
 };
