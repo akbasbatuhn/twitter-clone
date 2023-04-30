@@ -3,6 +3,7 @@ package com.server.twitterclone.controllers;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.request.UserLoginRequest;
 import com.server.twitterclone.request.UserRegisterRequest;
+import com.server.twitterclone.responses.AuthResponse;
 import com.server.twitterclone.security.JwtTokenProvider;
 import com.server.twitterclone.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -38,18 +39,27 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserLoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
+    public AuthResponse login(@RequestBody UserLoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken authToken = new
+                UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return "Bearer " + jwtToken;
+
+        User user = userService.getOneUserByUsername(loginRequest.getUserName());
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setMessage("Bearer " + jwtToken);
+        authResponse.setUserId(user.getId());
+
+        return authResponse;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public ResponseEntity<AuthResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
+        AuthResponse authResponse = new AuthResponse();
         if(userService.getOneUserByEmail(userRegisterRequest.getEmail()) != null) {
-            return new ResponseEntity<>("Username already in use", HttpStatus.BAD_REQUEST);
+            authResponse.setMessage("Username already in use");
+            return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
         }
         User user = new User();
         user.setEmail(userRegisterRequest.getEmail());
@@ -57,6 +67,8 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
         userService.createUser(user);
 
-        return new ResponseEntity<>("User successfully registered", HttpStatus.CREATED);
+        authResponse.setMessage("User successfully registered");
+
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 }
