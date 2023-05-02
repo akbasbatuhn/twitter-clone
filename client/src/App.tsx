@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 
-import Home from "./pages/Home";
-import Landing from "./pages/Landing";
-import Notifications from "./pages/Notifications";
-import Explore from "./pages/Explore";
-import Messages from "./pages/Messages";
-import Bookmarks from "./pages/Bookmarks";
-import Profile from "./pages/Profile";
+const Home = lazy(() => import("./pages/Home"));
+const Landing = lazy(() => import("./pages/Landing"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const Explore = lazy(() => import("./pages/Explore"));
+const Messages = lazy(() => import("./pages/Messages"));
+const Bookmarks = lazy(() => import("./pages/Bookmarks"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 import Loading from "./components/loading/Loading";
 
