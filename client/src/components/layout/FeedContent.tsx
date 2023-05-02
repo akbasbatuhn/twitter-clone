@@ -7,21 +7,21 @@ const FeedContent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState([]);
 
-    useEffect(() => {
-        fetch("/api/tweets")
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setPostList(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                    console.log(error);
-                }
-            );
-    }, []);
+    // useEffect(() => {
+    //     fetch("/api/tweets")
+    //         .then((res) => res.json())
+    //         .then(
+    //             (result) => {
+    //                 setIsLoaded(true);
+    //                 setPostList(result);
+    //             },
+    //             (error) => {
+    //                 setIsLoaded(true);
+    //                 setError(error);
+    //                 console.log(error);
+    //             }
+    //         );
+    // }, []);
 
     // if (error) {
     //     return <div>Error!!!</div>;

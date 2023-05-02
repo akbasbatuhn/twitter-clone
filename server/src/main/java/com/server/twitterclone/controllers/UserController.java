@@ -1,6 +1,7 @@
 package com.server.twitterclone.controllers;
 
 import com.server.twitterclone.entities.User;
+import com.server.twitterclone.responses.UserResponse;
 import com.server.twitterclone.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable Long userId) {
-        return userService.getOneUser(userId);
+    public UserResponse getUserById(@PathVariable Long userId) {
+        User user = userService.getOneUser(userId);
+        return new UserResponse(user);
     }
 
     @PutMapping("/{userId}")

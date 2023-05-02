@@ -1,19 +1,32 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import { login } from "../../store/user/UserAction";
 import FormInput from "./FormInput";
 
 const defaultFormFields = {
-    username: "",
+    userName: "",
     password: "",
 };
 
 const LoginForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
-    const { username, password } = formFields;
+    const { userName, password } = formFields;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormFields({ ...formFields, [name]: value });
+    };
+
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
+        dispatch(login(userName, password));
+        navigate("/home");
     };
 
     return (
@@ -25,8 +38,8 @@ const LoginForm = () => {
                     label="Username"
                     type="text"
                     onChange={handleChange}
-                    name="username"
-                    value={username}
+                    name="userName"
+                    value={userName}
                 />
                 <FormInput
                     label="Password"
@@ -40,6 +53,7 @@ const LoginForm = () => {
             <button
                 className="w-full px-8 py-2 rounded-full text-white mt-4
                 bg-primary-base hover:bg-primary-dark hover:cursor-pointer"
+                onClick={handleSubmit}
             >
                 Login
             </button>

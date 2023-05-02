@@ -13,6 +13,8 @@ public class User {
     Long id;
 
     String userName;
+    String name;
     String email;
     String password;
+    String bio;
 }
