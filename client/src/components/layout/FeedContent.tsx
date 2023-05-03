@@ -9,9 +9,7 @@ import { getTweets } from "../../store/tweet/TweetAction";
 const FeedContent = () => {
     const dispatch = useDispatch();
     const tweetList = useSelector(selectAllTweets);
-    console.log(tweetList);
 
-    // dispatch(getTweets());
     useEffect(() => {
         dispatch(getTweets());
     }, []);

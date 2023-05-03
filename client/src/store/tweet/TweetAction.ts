@@ -24,6 +24,12 @@ const fetchTweetsFailed = (error: Error) => {
     };
 };
 
+const sendTweetStart = () => {
+    return {
+        type: TWEET_ACTION_TYPES.SEND_TWEET_START,
+    };
+};
+
 export const getTweets = () => async (dispatch: Dispatch<any>) => {
     dispatch(fetchTweetsStart());
 
@@ -41,11 +47,13 @@ export const getTweets = () => async (dispatch: Dispatch<any>) => {
 
 export const sendTweet =
     (userId: number, text: string) => async (dispatch: Dispatch<any>) => {
+        dispatch(sendTweetStart());
         try {
             const res = await postTweet(userId, text);
 
             console.log(res, "Text data");
 
+            dispatch(getTweets());
             return res;
         } catch (error: any) {
             console.log(error);
