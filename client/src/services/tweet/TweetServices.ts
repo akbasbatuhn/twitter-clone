@@ -34,3 +34,22 @@ export const getSingleTweetByTweetId = async (id: number) => {
         },
     });
 };
+
+export const postTweet = async (userId: number, text: string) => {
+    const userToken = getUserTokenFromLocalStorage();
+
+    const res = await fetch("http://localhost:8080/tweets", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: userToken,
+        },
+        body: JSON.stringify({
+            userId: userId,
+            text: text,
+        }),
+    });
+
+    const data = await res.json();
+    return data;
+};

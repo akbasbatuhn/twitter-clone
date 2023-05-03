@@ -1,16 +1,27 @@
 import React, { ChangeEvent, useState } from "react";
 import { EmojiIcon, GIFIcon, MediaIcon } from "../../icons/Icons";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUserId } from "../../store/user/UserSelector";
+import { sendTweet } from "../../store/tweet/TweetAction";
 
 const TweetBox = () => {
     const [textContent, setTextContent] = useState("");
+    const dispatch = useDispatch();
+    const userId = useSelector(selectCurrentUserId);
 
-    const sendTweet = () => {
+    const send = () => {
         // TODO: send to backend
+        if (textContent.length > 0) {
+            const newTweet = dispatch(sendTweet(userId, textContent));
+            setTextContent("");
+        }
     };
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
-        setTextContent(value);
+        if (textContent.length <= 100) {
+            setTextContent(value);
+        }
     };
 
     return (
@@ -47,7 +58,7 @@ const TweetBox = () => {
                 <button
                     className="bg-primary-base text-white 
                     rounded-full px-4 py-2 font-medium hover:bg-primary-dark"
-                    onClick={sendTweet}
+                    onClick={send}
                 >
                     Tweet
                 </button>

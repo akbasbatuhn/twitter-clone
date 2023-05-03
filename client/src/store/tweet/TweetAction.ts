@@ -2,7 +2,7 @@ import { Dispatch } from "react";
 
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
 import { TweetType } from "./TweetReducer";
-import { getAllTweets } from "../../services/tweet/TweetServices";
+import { getAllTweets, postTweet } from "../../services/tweet/TweetServices";
 
 const fetchTweetsStart = () => {
     return {
@@ -38,3 +38,16 @@ export const getTweets = () => async (dispatch: Dispatch<any>) => {
         dispatch(fetchTweetsFailed(error));
     }
 };
+
+export const sendTweet =
+    (userId: number, text: string) => async (dispatch: Dispatch<any>) => {
+        try {
+            const res = await postTweet(userId, text);
+
+            console.log(res, "Text data");
+
+            return res;
+        } catch (error: any) {
+            console.log(error);
+        }
+    };
