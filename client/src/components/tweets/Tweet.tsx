@@ -12,7 +12,6 @@ export interface TweetProps {
 
 const Tweet = (props: TweetProps) => {
     const { id, text, username, userId, name } = props;
-    console.log(username);
     const image = false;
 
     return (
