@@ -1,59 +1,35 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Tweet, { TweetProps } from "../tweets/Tweet";
+import Tweet from "../tweets/Tweet";
+import { selectAllTweets } from "../../store/tweet/TweetSelector";
+import { TweetType } from "../../store/tweet/TweetReducer";
+import { getTweets } from "../../store/tweet/TweetAction";
 
 const FeedContent = () => {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [postList, setPostList] = useState([]);
+    const dispatch = useDispatch();
+    const tweetList = useSelector(selectAllTweets);
+    console.log(tweetList);
 
-    // useEffect(() => {
-    //     fetch("/api/tweets")
-    //         .then((res) => res.json())
-    //         .then(
-    //             (result) => {
-    //                 setIsLoaded(true);
-    //                 setPostList(result);
-    //             },
-    //             (error) => {
-    //                 setIsLoaded(true);
-    //                 setError(error);
-    //                 console.log(error);
-    //             }
-    //         );
-    // }, []);
-
-    // if (error) {
-    //     return <div>Error!!!</div>;
-    // } else if (!isLoaded) {
-    //     return <div>Loading...</div>;
-    // } else {
-    //     return (
-    //         <ul>
-    //             {postList.map((tweet: TweetProps) => (
-    //                 <Tweet key={tweet.id} text={tweet.text} id={tweet.id} />
-    //             ))}
-    //         </ul>
-    //     );
-    // }
+    // dispatch(getTweets());
+    useEffect(() => {
+        dispatch(getTweets());
+    }, []);
 
     return (
         <div>
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
-            <Tweet text={"Tweet text body"} id={1} />
+            <div>
+                {tweetList.map((tweet: TweetType) => (
+                    <Tweet
+                        key={tweet.id}
+                        id={tweet.id}
+                        text={tweet.text}
+                        userId={tweet.userId}
+                        username={tweet.userName}
+                        name={tweet.name}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

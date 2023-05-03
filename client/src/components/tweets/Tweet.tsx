@@ -5,11 +5,14 @@ import TweetIcons from "./TweetIcons";
 export interface TweetProps {
     id: number;
     text: string;
+    userId: number;
+    username: string;
+    name: string;
 }
 
 const Tweet = (props: TweetProps) => {
-    const { id, text } = props;
-
+    const { id, text, username, userId, name } = props;
+    console.log(username);
     const image = false;
 
     return (
@@ -24,12 +27,16 @@ const Tweet = (props: TweetProps) => {
             />
             <div className="flex-1">
                 <div className="flex items-center text-sm">
-                    <h4 className="font-bold">name</h4>
-                    <span className="ml-2 text-gray-dark">userName</span>
+                    <h4 className="font-bold">{name ? name : "name"}</h4>
+                    <span className="ml-2 text-gray-dark">
+                        {username ? username : "username"}
+                    </span>
                     <div className="mx-2 bg-gray-dark h-1 w-1 border rounded-full" />
                     <span className="text-gray-dark">timestamp</span>
                 </div>
-                <p className="mt-2 text-gray-900 text-sm">tweet body text</p>
+                <p className="mt-2 text-gray-900 text-sm">
+                    {text ? text : "TweetText"}
+                </p>
                 {image && (
                     <img
                         src=""
