@@ -3,7 +3,7 @@ import TweetBox from "./TweetBox";
 
 const Feed = () => {
     return (
-        <main className="flex flex-col border-r border-l mr-4 w-full">
+        <main className="flex flex-col">
             <header
                 className="sticky top-0 z-10 flex p-4 border-t border-b 
             border-gray-extraLight bg-white"

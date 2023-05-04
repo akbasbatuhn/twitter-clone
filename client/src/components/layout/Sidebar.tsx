@@ -5,7 +5,7 @@ import SearchBar from "../right-side-bar/SearchBar";
 
 const SideBar = () => {
     return (
-        <aside className="w-[22rem] ml-4 sticky top-0 h-screen">
+        <aside className="sticky top-0 h-screen">
             <SearchBar />
             <div className="flex flex-col space-y-4">
                 <Trends />

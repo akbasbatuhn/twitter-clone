@@ -59,7 +59,7 @@ const SideNavBar = () => {
     };
 
     return (
-        <div className="h-screen sticky top-0 mt-1 ml-1 min-h-screen w-72 flex flex-col justify-between px-2">
+        <div className="h-screen sticky top-0 mt-1 ml-1 min-h-screen flex flex-col justify-between px-2">
             <div>
                 <div className="flex justify-center w-12 h-12 items-center rounded-full py-0.5 hover:bg-gray-lightest">
                     <TwitterIcon className="w-7 h-7 text-primary-base" />
