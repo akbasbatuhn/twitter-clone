@@ -37,8 +37,6 @@ export const getTweets = () => async (dispatch: Dispatch<any>) => {
         const res = await getAllTweets();
         const data: TweetType[] = await res.json();
 
-        console.log(data, "Tweet data");
-
         dispatch(fetchTweetsSuccess(data));
     } catch (error: any) {
         dispatch(fetchTweetsFailed(error));
@@ -50,8 +48,6 @@ export const sendTweet =
         dispatch(sendTweetStart());
         try {
             const res = await postTweet(userId, text);
-
-            console.log(res, "Text data");
 
             dispatch(getTweets());
             return res;

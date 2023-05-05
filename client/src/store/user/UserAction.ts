@@ -58,8 +58,6 @@ export const login =
             const res = await getUserId(username, password);
             const data = await res?.json();
 
-            console.log(data, "User Id Expected");
-
             dispatch(loginSuccess(data));
 
             dispatch(getUser(data.userId, data.message));
@@ -75,8 +73,6 @@ export const getUser =
         try {
             const res = await getUserData(userId, token);
             const data = await res?.json();
-
-            console.log(data, "User Data expected");
 
             dispatch(loadUserSuccess(data));
         } catch (error: any) {
