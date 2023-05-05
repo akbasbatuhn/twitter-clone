@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../store/user/UserSelector";
 import { sendTweet } from "../../store/tweet/TweetAction";
 
-const TweetBox = () => {
+const TweetBox = ({ closeModal = () => {} }) => {
     const [textContent, setTextContent] = useState("");
     const dispatch = useDispatch();
     const userId = useSelector(selectCurrentUserId);
@@ -14,6 +14,7 @@ const TweetBox = () => {
         if (textContent.length > 0) {
             const newTweet = dispatch(sendTweet(userId, textContent));
             setTextContent("");
+            closeModal();
         }
     };
 

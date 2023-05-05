@@ -15,6 +15,7 @@ import {
     MoreIcon,
     TweetIcon,
 } from "../../icons/Icons";
+import TweetModal from "../modals/TweetModal";
 
 const sideLinks = [
     {
@@ -53,6 +54,11 @@ const sideLinks = [
 
 const SideNavBar = () => {
     const [active, setActive] = useState("Home");
+    const [isTweetModalActive, setTweetModalActive] = useState(false);
+
+    const changeTweetModalActive = () => {
+        setTweetModalActive(!isTweetModalActive);
+    };
 
     const handleMenuItemClick = (name: string) => {
         setActive(name);
@@ -81,9 +87,16 @@ const SideNavBar = () => {
                 </div>
                 <div>
                     {/* <TweetIcon /> */}
-                    <button className="bg-primary-base hover:bg-primary-dark text-white shadow-lg rounded-full py-3 px-8 w-10/12 transform transition-colors duration-150">
+                    <button
+                        className="bg-primary-base hover:bg-primary-dark text-white shadow-lg rounded-full py-3 px-8 w-10/12 transform transition-colors duration-150"
+                        onClick={changeTweetModalActive}
+                    >
                         Tweet
                     </button>
+                    <TweetModal
+                        isActive={isTweetModalActive}
+                        onClose={changeTweetModalActive}
+                    />
                 </div>
             </div>
             <div>
