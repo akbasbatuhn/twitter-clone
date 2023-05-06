@@ -40,7 +40,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
 
         case USER_ACTION_TYPES.LOGIN_SUCCESS:
         case USER_ACTION_TYPES.REGISTER_SUCCESS:
-            localStorage.setItem("userToken", payload.message);
+            localStorage.setItem("userToken", payload.accessToken);
             return {
                 ...state,
                 currentUserId: payload.userId,

@@ -1,29 +1,21 @@
+import { GetWithAuth, PostWithoutAuth } from "../http/HttpServices";
+
 export const getUserId = async (userName: string, password: string) => {
-    const data = { userName, password };
+    const body = { userName, password };
+    const url = "http://localhost:8080/auth/login";
 
     try {
-        return await fetch("http://localhost:8080/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        return await PostWithoutAuth(url, body);
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
 export const getUserData = async (userId: number, token: string) => {
+    const url = `http://localhost:8080/users/${userId}`;
     try {
-        return await fetch(`http://localhost:8080/users/${userId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token}`,
-            },
-        });
+        return await GetWithAuth(url, token);
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };

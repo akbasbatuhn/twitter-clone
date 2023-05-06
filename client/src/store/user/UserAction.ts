@@ -60,7 +60,7 @@ export const login =
 
             dispatch(loginSuccess(data));
 
-            dispatch(getUser(data.userId, data.message));
+            dispatch(getUser(data.userId, data.accessToken));
         } catch (error: any) {
             dispatch(loginFailed(error));
         }
