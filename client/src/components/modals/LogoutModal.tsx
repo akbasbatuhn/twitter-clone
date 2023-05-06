@@ -16,7 +16,9 @@ const LogoutModal = ({ isActive }: LogoutProps) => {
 
     const logoutFromAccount = () => {
         dispatch(logout());
-        navigate("/auth");
+        setTimeout(() => {
+            navigate("/auth");
+        }, 2000);
     };
 
     return (

@@ -20,7 +20,7 @@ type UserState = {
 const INITIAL_STATE: UserState = {
     token: localStorage.getItem("userToken"),
     isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
     currentUserId: null,
     user: null,
     error: null,
@@ -41,6 +41,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.LOGIN_SUCCESS:
         case USER_ACTION_TYPES.REGISTER_SUCCESS:
             localStorage.setItem("userToken", payload.accessToken);
+            localStorage.setItem("userId", payload.userId);
             return {
                 ...state,
                 currentUserId: payload.userId,
@@ -50,6 +51,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.USER_LOADED:
             return {
                 ...state,
+                currentUserId: Number(localStorage.getItem("userId")),
                 user: payload,
                 isLoading: false,
                 isAuthenticated: true,
@@ -60,6 +62,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.AUTH_ERROR:
         case USER_ACTION_TYPES.REGISTER_FAILED:
             localStorage.removeItem("userToken");
+            localStorage.removeItem("userId");
             return {
                 ...state,
                 currentUserId: null,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import LandingImage from "../components/landing/LandingImage";
 import LandingAuth from "../components/landing/LandingAuth";
@@ -7,10 +7,21 @@ import Login from "../components/modals/Login";
 import Register from "../components/modals/Register";
 
 import { TwitterIcon } from "../icons/Icons";
+import { useSelector } from "react-redux";
+import { isUserAuthenticated, userIsLoading } from "../store/user/UserSelector";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
     const [isLoginActive, setLoginActive] = useState(false);
     const [isRegisterActive, setRegisterActive] = useState(false);
+    const navigate = useNavigate();
+    const isAuthenticated = useSelector(isUserAuthenticated);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/home");
+        }
+    }, [isAuthenticated]);
 
     const changeLoginModalActiveState = () => {
         setLoginActive(!isLoginActive);

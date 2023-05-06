@@ -3,6 +3,10 @@ import { Dispatch } from "react";
 import { USER_ACTION_TYPES } from "./UserTypes";
 import { User } from "./UserReducer";
 import { getUserData, getUserId } from "../../services/user/UserServices";
+import {
+    getUserIdFromLocalStorage,
+    getUserTokenFromLocalStorage,
+} from "../../utils/tokenUtils";
 
 export const loginStart = () => {
     return {
@@ -80,6 +84,20 @@ export const getUser =
         }
     };
 
+export const loadUser = () => async (dispatch: Dispatch<any>) => {
+    const canLoadUser =
+        getUserIdFromLocalStorage() && getUserTokenFromLocalStorage();
+
+    if (canLoadUser) {
+        dispatch(
+            getUser(
+                Number(getUserIdFromLocalStorage()),
+                String(getUserTokenFromLocalStorage())
+            )
+        );
+    }
+};
+
 export const logout = () => (dispatch: Dispatch<any>) => {
-    dispatch(logoutSuccess);
+    dispatch(logoutSuccess());
 };
