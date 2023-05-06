@@ -9,10 +9,10 @@ interface LogoutProps {
 }
 
 const LogoutModal = ({ isActive }: LogoutProps) => {
-    if (!isActive) return null;
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    if (!isActive) return <></>;
 
     const logoutFromAccount = () => {
         dispatch(logout());
