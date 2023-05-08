@@ -30,18 +30,20 @@ const sendTweetStart = () => {
     };
 };
 
-export const getTweets = () => async (dispatch: Dispatch<any>) => {
-    dispatch(fetchTweetsStart());
+export const getTweets =
+    (userId: number = -1) =>
+    async (dispatch: Dispatch<any>) => {
+        dispatch(fetchTweetsStart());
 
-    try {
-        const res = await getAllTweets();
-        const data: TweetType[] = await res.json();
+        try {
+            const res = await getAllTweets(userId);
+            const data: TweetType[] = await res.json();
 
-        dispatch(fetchTweetsSuccess(data));
-    } catch (error: any) {
-        dispatch(fetchTweetsFailed(error));
-    }
-};
+            dispatch(fetchTweetsSuccess(data));
+        } catch (error: any) {
+            dispatch(fetchTweetsFailed(error));
+        }
+    };
 
 export const sendTweet =
     (userId: number, text: string) => async (dispatch: Dispatch<any>) => {

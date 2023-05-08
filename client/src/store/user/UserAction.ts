@@ -3,10 +3,7 @@ import { Dispatch } from "react";
 import { USER_ACTION_TYPES } from "./UserTypes";
 import { User } from "./UserReducer";
 import { getUserData, getUserId } from "../../services/user/UserServices";
-import {
-    getUserIdFromLocalStorage,
-    getUserTokenFromLocalStorage,
-} from "../../utils/tokenUtils";
+import { getUserTokenFromLocalStorage } from "../../utils/tokenUtils";
 
 export const loginStart = () => {
     return {
@@ -64,37 +61,31 @@ export const login =
 
             dispatch(loginSuccess(data));
 
-            dispatch(getUser(data.userId, data.accessToken));
+            dispatch(getUser(data.userId));
         } catch (error: any) {
             dispatch(loginFailed(error));
         }
     };
 
-export const getUser =
-    (userId: number, token: string) => async (dispatch: Dispatch<any>) => {
-        dispatch(loadUserStart());
+export const getUser = (userId: number) => async (dispatch: Dispatch<any>) => {
+    dispatch(loadUserStart());
+    const token: string = getUserTokenFromLocalStorage();
 
-        try {
-            const res = await getUserData(userId, token);
-            const data = await res?.json();
+    try {
+        const res = await getUserData(userId, token);
+        const data = await res?.json();
 
-            dispatch(loadUserSuccess(data));
-        } catch (error: any) {
-            dispatch(loadUserFailed(error));
-        }
-    };
+        dispatch(loadUserSuccess(data));
+    } catch (error: any) {
+        dispatch(loadUserFailed(error));
+    }
+};
 
-export const loadUser = () => async (dispatch: Dispatch<any>) => {
-    const canLoadUser =
-        getUserIdFromLocalStorage() && getUserTokenFromLocalStorage();
+export const loadUser = (userId: number) => async (dispatch: Dispatch<any>) => {
+    const canLoadUser = userId !== null && getUserTokenFromLocalStorage();
 
     if (canLoadUser) {
-        dispatch(
-            getUser(
-                Number(getUserIdFromLocalStorage()),
-                String(getUserTokenFromLocalStorage())
-            )
-        );
+        dispatch(getUser(userId));
     }
 };
 

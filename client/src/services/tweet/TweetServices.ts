@@ -1,55 +1,76 @@
 import { getUserTokenFromLocalStorage } from "../../utils/tokenUtils";
+import { GetWithAuth, PostWithAuth } from "../http/HttpServices";
 
-export const getAllTweets = async () => {
+export const getAllTweets = async (userId: number) => {
+    let url;
+    if (userId === -1) {
+        url = "http://localhost:8080/tweets";
+    } else {
+        url = `http://localhost:8080/tweets/${userId}`;
+    }
+
     const userToken = getUserTokenFromLocalStorage();
-    return await fetch("http://localhost:8080/tweets", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: userToken,
-        },
-    });
+
+    return GetWithAuth(url, userToken!);
+
+    // return await fetch("http://localhost:8080/tweets", {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: userToken,
+    //     },
+    // });
 };
 
-export const getAllTweetsByUserId = async (userId: number) => {
+export const getAllTweetsByUserId = (userId: number) => {
+    const url = `http://localhost:8080/tweets?userId=${userId}`;
     const userToken = getUserTokenFromLocalStorage();
 
-    return await fetch(`http://localhost:8080/tweets?userId=${userId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: userToken,
-        },
-    });
+    return GetWithAuth(url, userToken!);
+
+    // return await fetch(`http://localhost:8080/tweets?userId=${userId}`, {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: userToken,
+    //     },
+    // });
 };
 
-export const getSingleTweetByTweetId = async (id: number) => {
+export const getSingleTweetByTweetId = (id: number) => {
+    const url = `http://localhost:8080/tweets/${id}`;
     const userToken = getUserTokenFromLocalStorage();
 
-    return await fetch(`http://localhost:8080/tweets/${id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: userToken,
-        },
-    });
+    return GetWithAuth(url, userToken!);
+
+    // return await fetch(`http://localhost:8080/tweets/${id}`, {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: userToken,
+    //     },
+    // });
 };
 
-export const postTweet = async (userId: number, text: string) => {
+export const postTweet = (userId: number, text: string) => {
+    const url = "http://localhost:8080/tweets";
     const userToken = getUserTokenFromLocalStorage();
+    const body = { userId, text };
 
-    const res = await fetch("http://localhost:8080/tweets", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: userToken,
-        },
-        body: JSON.stringify({
-            userId: userId,
-            text: text,
-        }),
-    });
+    return PostWithAuth(url, body, userToken!);
 
-    const data = await res.json();
-    return data;
+    // const res = await fetch("http://localhost:8080/tweets", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: userToken,
+    //     },
+    //     body: JSON.stringify({
+    //         userId: userId,
+    //         text: text,
+    //     }),
+    // });
+
+    // const data = await res.json();
+    // return data;
 };

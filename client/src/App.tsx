@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = lazy(() => import("./pages/Home"));
 const Landing = lazy(() => import("./pages/Landing"));
@@ -14,13 +14,15 @@ import Loading from "./components/loading/Loading";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import { getUserTokenFromLocalStorage } from "./utils/tokenUtils";
 import { loadUser } from "./store/user/UserAction";
+import { selectCurrentUserId } from "./store/user/UserSelector";
 
 const App = () => {
     const dispatch = useDispatch();
+    const userId = useSelector(selectCurrentUserId);
 
     useEffect(() => {
-        if (getUserTokenFromLocalStorage() != null) {
-            dispatch(loadUser());
+        if (getUserTokenFromLocalStorage() !== null) {
+            dispatch(loadUser(userId));
         }
     }, []);
     return (
