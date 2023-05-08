@@ -41,7 +41,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.LOGIN_SUCCESS:
         case USER_ACTION_TYPES.REGISTER_SUCCESS:
             localStorage.setItem("userToken", payload.accessToken);
-            localStorage.setItem("userId", payload.userId);
+            localStorage.setItem("refreshToken", payload.refreshToken);
             return {
                 ...state,
                 currentUserId: payload.userId,
@@ -51,7 +51,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.USER_LOADED:
             return {
                 ...state,
-                currentUserId: Number(localStorage.getItem("userId")),
+                currentUserId: payload.userId,
                 user: payload,
                 isLoading: false,
                 isAuthenticated: true,
@@ -62,7 +62,7 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.AUTH_ERROR:
         case USER_ACTION_TYPES.REGISTER_FAILED:
             localStorage.removeItem("userToken");
-            localStorage.removeItem("userId");
+            localStorage.removeItem("refreshToken");
             return {
                 ...state,
                 currentUserId: null,

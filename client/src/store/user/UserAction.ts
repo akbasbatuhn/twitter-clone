@@ -2,8 +2,14 @@ import { Dispatch } from "react";
 
 import { USER_ACTION_TYPES } from "./UserTypes";
 import { User } from "./UserReducer";
-import { getUserData, getUserId } from "../../services/user/UserServices";
+import {
+    getUserData,
+    getUserId,
+    registerUser,
+} from "../../services/user/UserServices";
 import { getUserTokenFromLocalStorage } from "../../utils/tokenUtils";
+import { UserRegister } from "../../types/User";
+import { RegisterResponse } from "../../types/AuthResponse";
 
 export const loginStart = () => {
     return {
@@ -51,6 +57,26 @@ export const logoutSuccess = () => {
     };
 };
 
+export const registerUserStart = () => {
+    return {
+        type: USER_ACTION_TYPES.REGISTER_START,
+    };
+};
+
+export const registerUserSuccess = (data: RegisterResponse) => {
+    return {
+        type: USER_ACTION_TYPES.REGISTER_SUCCESS,
+        payload: data,
+    };
+};
+
+export const registerUserFailed = (error: Error) => {
+    return {
+        type: USER_ACTION_TYPES.REGISTER_FAILED,
+        payload: error,
+    };
+};
+
 export const login =
     (username: string, password: string) => async (dispatch: Dispatch<any>) => {
         dispatch(loginStart());
@@ -92,3 +118,20 @@ export const loadUser = (userId: number) => async (dispatch: Dispatch<any>) => {
 export const logout = () => (dispatch: Dispatch<any>) => {
     dispatch(logoutSuccess());
 };
+
+export const register =
+    (data: UserRegister) => async (dispatch: Dispatch<any>) => {
+        dispatch(registerUserStart());
+        const token: string = getUserTokenFromLocalStorage();
+
+        try {
+            const res = await registerUser(data, token);
+            const response = await res?.json();
+
+            dispatch(registerUserSuccess(response));
+
+            dispatch(getUser(response.userId));
+        } catch (error: any) {
+            dispatch(registerUserFailed(error));
+        }
+    };

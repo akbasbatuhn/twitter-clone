@@ -1,3 +1,5 @@
+import { RegisterResponse } from "../../types/AuthResponse";
+
 export const PostWithAuth = async (
     url: string,
     body: object,
