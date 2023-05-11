@@ -10,7 +10,7 @@ export const selectCurrentUserId = createSelector(
 
 export const selectCurrentUser = createSelector(
     selectUserReducer,
-    (user) => user.user
+    (user) => user.currentUser
 );
 
 export const isUserAuthenticated = createSelector(
@@ -21,4 +21,14 @@ export const isUserAuthenticated = createSelector(
 export const userIsLoading = createSelector(
     selectUserReducer,
     (user) => user.isLoading
+);
+
+export const selectUser = createSelector(
+    selectUserReducer,
+    (user) => user.user
+);
+
+export const selectProfileLoading = createSelector(
+    selectUserReducer,
+    (user) => user.isProfileLoading
 );

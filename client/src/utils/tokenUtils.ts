@@ -1,3 +1,3 @@
 export const getUserTokenFromLocalStorage = () => {
-    return localStorage.getItem("userToken")!;
+    return localStorage.getItem("accessToken")!;
 };

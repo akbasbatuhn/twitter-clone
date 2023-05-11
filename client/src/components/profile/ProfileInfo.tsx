@@ -1,10 +1,12 @@
 import { FC } from "react";
 
+import { User } from "../../store/user/UserReducer";
+
 interface ProfileInfoProps {
-    hasBio: boolean;
+    user: User;
 }
 
-const ProfileInfo: FC<ProfileInfoProps> = ({ hasBio }) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ user }) => {
     return (
         <div className="mb-6">
             <div className="flex h-20 mb-2 justify-between">
@@ -27,22 +29,22 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ hasBio }) => {
             </div>
             <div className="flex flex-col px-4 space-y-4">
                 <div className="flex flex-col">
-                    <span className="text-xl font-bold">Name</span>
-                    <span>@username</span>
+                    <span className="text-xl font-bold">{user.name}</span>
+                    <span>@{user.userName}</span>
                 </div>
-                {hasBio ? <span>UserBio</span> : ""}
+                <span>{user.bio ? user.bio : ""}</span>
                 <div>
                     <span className="text-gray-500 text-base">
-                        Joined Timestamp
+                        Joined 'Timestamp'
                     </span>
                 </div>
                 <div className="flex space-x-12 text-sm">
                     <div>
-                        <span className="font-bold">142 </span>
+                        <span className="font-bold">followCount </span>
                         <span className="text-gray-500">Following</span>
                     </div>
                     <div>
-                        <span className="font-bold">142152 </span>
+                        <span className="font-bold">followerCount </span>
                         <span className="text-gray-500">Follower</span>
                     </div>
                 </div>

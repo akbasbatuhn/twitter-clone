@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectCurrentUserId } from "../../store/user/UserSelector";
 
 interface ISideLinkProps {
     name: string;
@@ -15,6 +17,7 @@ const SideLink: React.FC<ISideLinkProps> = ({
     onMenuItemClick,
 }) => {
     const isActive = active === name;
+    const userId = useSelector(selectCurrentUserId);
 
     return (
         <li className="group" onClick={() => onMenuItemClick(name)}>
@@ -23,6 +26,8 @@ const SideLink: React.FC<ISideLinkProps> = ({
                     name.toLowerCase() === "twitterblue" ||
                     name.toLowerCase() === "more"
                         ? ""
+                        : name.toLowerCase() === "profile"
+                        ? `/profile/${userId}`
                         : `/${name.toLowerCase()}`
                 }
                 className="cursor-pointer block text-xl mb-2"

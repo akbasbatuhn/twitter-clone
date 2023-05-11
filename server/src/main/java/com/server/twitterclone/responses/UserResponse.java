@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class UserResponse {
-    Long id;
+    Long userId;
     String userName;
     String name;
 
@@ -23,7 +23,7 @@ public class UserResponse {
     // TODO: Add user birthday
 
     public UserResponse(User entity) {
-        this.id = entity.getId();
+        this.userId = entity.getId();
         this.userName = entity.getUserName();
         this.name = entity.getName();
         this.bio = entity.getBio();

@@ -77,6 +77,25 @@ export const registerUserFailed = (error: Error) => {
     };
 };
 
+export const getUserStart = () => {
+    return {
+        type: USER_ACTION_TYPES.GET_USER_PROFILE_START,
+    };
+};
+
+export const getUserSuccess = (data: User) => {
+    return {
+        type: USER_ACTION_TYPES.GET_USER_PROFILE,
+        payload: data,
+    };
+};
+
+export const exitProfile = () => {
+    return {
+        type: USER_ACTION_TYPES.EXIT_PROFILE,
+    };
+};
+
 export const login =
     (username: string, password: string) => async (dispatch: Dispatch<any>) => {
         dispatch(loginStart());
@@ -87,31 +106,32 @@ export const login =
 
             dispatch(loginSuccess(data));
 
-            dispatch(getUser(data.userId));
+            dispatch(getCurrentUser(data.userId));
         } catch (error: any) {
             dispatch(loginFailed(error));
         }
     };
 
-export const getUser = (userId: number) => async (dispatch: Dispatch<any>) => {
-    dispatch(loadUserStart());
-    const token: string = getUserTokenFromLocalStorage();
+export const getCurrentUser =
+    (userId: number) => async (dispatch: Dispatch<any>) => {
+        dispatch(loadUserStart());
+        const token: string = getUserTokenFromLocalStorage();
 
-    try {
-        const res = await getUserData(userId, token);
-        const data = await res?.json();
+        try {
+            const res = await getUserData(userId, token);
+            const data = await res?.json();
 
-        dispatch(loadUserSuccess(data));
-    } catch (error: any) {
-        dispatch(loadUserFailed(error));
-    }
-};
+            dispatch(loadUserSuccess(data));
+        } catch (error: any) {
+            dispatch(loadUserFailed(error));
+        }
+    };
 
 export const loadUser = (userId: number) => async (dispatch: Dispatch<any>) => {
     const canLoadUser = userId !== null && getUserTokenFromLocalStorage();
 
     if (canLoadUser) {
-        dispatch(getUser(userId));
+        dispatch(getCurrentUser(userId));
     }
 };
 
@@ -130,8 +150,21 @@ export const register =
 
             dispatch(registerUserSuccess(response));
 
-            dispatch(getUser(response.userId));
+            dispatch(getCurrentUser(response.userId));
         } catch (error: any) {
             dispatch(registerUserFailed(error));
         }
     };
+
+export const getUser = (userId: number) => async (dispatch: Dispatch<any>) => {
+    const token: string = getUserTokenFromLocalStorage();
+    dispatch(getUserStart());
+    try {
+        const res = await getUserData(userId, token);
+        const data = await res?.json();
+
+        dispatch(getUserSuccess(data));
+    } catch (error) {
+        console.error(error);
+    }
+};

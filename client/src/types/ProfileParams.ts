@@ -1,0 +1,3 @@
+type ProfileParams = {
+    userId: string;
+};
