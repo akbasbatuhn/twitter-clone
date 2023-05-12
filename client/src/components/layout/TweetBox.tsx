@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { EmojiIcon, GIFIcon, MediaIcon } from "../../icons/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../store/user/UserSelector";

@@ -7,7 +7,7 @@ const TweetIcons = () => {
 
     return (
         <div>
-            <ul className="-ml-1 mt-3 flex justify-between max-w-sm">
+            <ul className="-ml-1 mt-3 flex justify-between max-w-md">
                 <li className="flex items-center space-x-2 text-gray-dark text-sm group">
                     <div
                         className="flex items-center justify-center 

@@ -15,6 +15,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import { getUserTokenFromLocalStorage } from "./utils/tokenUtils";
 import { loadUser } from "./store/user/UserAction";
 import { selectCurrentUserId } from "./store/user/UserSelector";
+import TweetPage from "./pages/TweetPage";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const App = () => {
                         <Route path="/messages" element={<Messages />} />
                         <Route path="/bookmarks" element={<Bookmarks />} />
                         <Route path="/profile/:userId" element={<Profile />} />
+                        <Route path="/tweet/:tweetId" element={<TweetPage />} />
                     </Route>
                 </Routes>
             </Suspense>

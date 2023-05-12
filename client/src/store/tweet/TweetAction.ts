@@ -3,6 +3,7 @@ import { Dispatch } from "react";
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
 import { TweetType } from "./TweetReducer";
 import { getAllTweets, postTweet } from "../../services/tweet/TweetServices";
+import { getSingleTweetByTweetId } from "../../services/tweet/TweetServices";
 
 const fetchTweetsStart = () => {
     return {
@@ -12,14 +13,14 @@ const fetchTweetsStart = () => {
 
 const fetchTweetsSuccess = (tweets: TweetType[]) => {
     return {
-        type: TWEET_ACTION_TYPES.FETCH_TWEET_SUCCESS,
+        type: TWEET_ACTION_TYPES.FETCH_TWEETS_SUCCESS,
         payload: tweets,
     };
 };
 
 const fetchTweetsFailed = (error: Error) => {
     return {
-        type: TWEET_ACTION_TYPES.FETCH_TWEET_SUCCESS,
+        type: TWEET_ACTION_TYPES.FETCH_TWEETS_SUCCESS,
         payload: error,
     };
 };
@@ -27,6 +28,32 @@ const fetchTweetsFailed = (error: Error) => {
 const sendTweetStart = () => {
     return {
         type: TWEET_ACTION_TYPES.SEND_TWEET_START,
+    };
+};
+
+const getSingleTweetStart = () => {
+    return {
+        type: TWEET_ACTION_TYPES.FETCH_TWEET_START,
+    };
+};
+
+const getSingleTweetSuccess = (data: TweetType) => {
+    return {
+        type: TWEET_ACTION_TYPES.FETCH_TWEET_SUCCESS,
+        payload: data,
+    };
+};
+
+const getSingleTweetFailed = (error: Error) => {
+    return {
+        type: TWEET_ACTION_TYPES.FETCH_TWEET_FAILED,
+        payload: error,
+    };
+};
+
+export const exitTweetPage = () => {
+    return {
+        type: TWEET_ACTION_TYPES.EXIT_PAGE,
     };
 };
 
@@ -55,5 +82,19 @@ export const sendTweet =
             return res;
         } catch (error: any) {
             console.log(error);
+        }
+    };
+
+export const getTweet =
+    (tweetId: number) => async (dispatch: Dispatch<any>) => {
+        dispatch(getSingleTweetStart());
+
+        try {
+            const res = await getSingleTweetByTweetId(tweetId);
+            const data: TweetType = await res.json();
+
+            dispatch(getSingleTweetSuccess(data));
+        } catch (error: any) {
+            dispatch(getSingleTweetFailed(error));
         }
     };
