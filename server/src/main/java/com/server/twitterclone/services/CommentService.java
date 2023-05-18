@@ -41,7 +41,7 @@ public class CommentService {
 
     public Comment createOneComment(CommentCreateRequest createComment) {
         User user = userService.getOneUser(createComment.getUserId());
-        Tweet tweet = tweetService.getOneTweet(createComment.getTweetId());
+        Tweet tweet = tweetService.findTweetById(createComment.getTweetId());
 
         if(user != null && tweet != null) {
             Comment newComment = new Comment();

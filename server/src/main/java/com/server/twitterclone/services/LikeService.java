@@ -40,7 +40,7 @@ public class LikeService {
 
     public Like createOneLike(LikeCreateRequest request) {
         User user = userService.getOneUser(request.getUserId());
-        Tweet tweet = tweetService.getOneTweet(request.getTweetId());
+        Tweet tweet = tweetService.findTweetById(request.getTweetId());
 
         if(user != null && tweet != null) {
             Like likeToSave = new Like();

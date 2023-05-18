@@ -1,6 +1,5 @@
 package com.server.twitterclone.controllers;
 
-import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.request.TweetCreateRequest;
 import com.server.twitterclone.request.TweetUpdateRequest;
 import com.server.twitterclone.responses.TweetResponse;
@@ -26,18 +25,18 @@ public class TweetController {
     }
 
     @PostMapping
-    public Tweet createTweet(@RequestBody TweetCreateRequest newTweetRequest) {
+    public TweetResponse createTweet(@RequestBody TweetCreateRequest newTweetRequest) {
         return tweetService.createTweet(newTweetRequest);
     }
 
     @GetMapping("/{tweetId}")
-    public Tweet getTweetById(@PathVariable Long tweetId) {
+    public TweetResponse getTweetById(@PathVariable Long tweetId) {
         return tweetService.getOneTweet(tweetId);
     }
 
 
     @PutMapping("/{tweetId}")
-    public Tweet updateOneTweet(@PathVariable Long tweetId, @RequestBody TweetUpdateRequest updateTweetRequest) {
+    public TweetResponse updateOneTweet(@PathVariable Long tweetId, @RequestBody TweetUpdateRequest updateTweetRequest) {
         return tweetService.updateOneTweet(tweetId, updateTweetRequest);
     }
 

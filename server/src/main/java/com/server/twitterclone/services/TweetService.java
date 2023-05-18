@@ -35,7 +35,7 @@ public class TweetService {
         return tweetList.stream().map(tweet -> new TweetResponse(tweet)).collect(Collectors.toList());
     }
 
-    public Tweet createTweet(TweetCreateRequest newTweetRequest) {
+    public TweetResponse createTweet(TweetCreateRequest newTweetRequest) {
         User user = userService.getOneUser(newTweetRequest.getUserId());
 
         if(user == null) {
@@ -48,14 +48,17 @@ public class TweetService {
         newTweet.setCreatedAt(new Date());
         newTweet.setUser(user);
 
-        return tweetRepository.save(newTweet);
+        tweetRepository.save(newTweet);
+        return new TweetResponse(newTweet);
     }
 
-    public Tweet getOneTweet(Long tweetId) {
-        return tweetRepository.findById(tweetId).orElse(null);
+    public TweetResponse getOneTweet(Long tweetId) {
+        Tweet newTweet = tweetRepository.findById(tweetId).orElse(null);
+
+        return new TweetResponse(newTweet);
     }
 
-    public Tweet updateOneTweet(Long tweetId, TweetUpdateRequest updateTweet) {
+    public TweetResponse updateOneTweet(Long tweetId, TweetUpdateRequest updateTweet) {
         Optional<Tweet> tweet = tweetRepository.findById(tweetId);
 
         if(tweet.isPresent()) {
@@ -63,7 +66,7 @@ public class TweetService {
             toUpdate.setText(updateTweet.getText());
             tweetRepository.save(toUpdate);
 
-            return toUpdate;
+            return new TweetResponse(toUpdate);
         }
 
         return null;
@@ -71,5 +74,9 @@ public class TweetService {
 
     public void deleteOneTweet(Long tweetId) {
         tweetRepository.deleteById(tweetId);
+    }
+
+    public Tweet findTweetById(Long tweetId) {
+        return tweetRepository.findById(tweetId).orElse(null);
     }
 }
