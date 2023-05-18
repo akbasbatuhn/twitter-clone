@@ -6,6 +6,7 @@ export type User = {
     userName: string;
     name: string;
     bio: string;
+    createdAt: string;
 };
 
 type UserState = {

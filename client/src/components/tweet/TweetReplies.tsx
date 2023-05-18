@@ -4,7 +4,7 @@ const TweetReplies = () => {
     return (
         <div>
             <div>
-                <Tweet
+                {/* <Tweet
                     id={1}
                     text={"Text"}
                     userId={1}
@@ -87,7 +87,7 @@ const TweetReplies = () => {
                     userId={1}
                     username={"username"}
                     name={"name"}
-                />
+                /> */}
             </div>
         </div>
     );

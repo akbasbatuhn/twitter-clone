@@ -44,6 +44,7 @@ const TweetPage = () => {
                             userId={tweet.user.id}
                             username={tweet.user.userName}
                             name={tweet.user.name}
+                            createdAt={tweet.createdAt}
                         />
                     </div>
                 </Layout>

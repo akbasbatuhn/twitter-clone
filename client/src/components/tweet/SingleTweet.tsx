@@ -4,7 +4,7 @@ import TweetContent from "./TweetContent";
 import TweetReplies from "./TweetReplies";
 
 const SingleTweet = (props: TweetProps) => {
-    const { id, text, username, userId, name } = props;
+    const { id, text, username, userId, name, createdAt } = props;
 
     return (
         <div className="flex flex-col space-y-3">
@@ -15,6 +15,7 @@ const SingleTweet = (props: TweetProps) => {
                     userId={userId}
                     username={username}
                     name={name}
+                    createdAt={createdAt}
                 />
             </article>
             <div>

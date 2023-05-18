@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 
 import { TweetProps } from "../tweets/Tweet";
 import SingleTweetIcons from "./SingleTweetIcons";
+import { changeDateFormat } from "../../utils/dateUtils";
 
 const TweetContent = (props: TweetProps) => {
-    const { id, text, username, userId, name } = props;
+    const { id, text, username, userId, name, createdAt } = props;
+
+    const formattedDate = changeDateFormat(createdAt);
 
     return (
         <div>
@@ -28,7 +31,9 @@ const TweetContent = (props: TweetProps) => {
                     {text ? text : "TweetText"}
                 </p>
                 <div>
-                    <span className="text-gray-600 font-light">Timestamp</span>
+                    <span className="text-gray-600 font-light text-sm">
+                        {formattedDate}
+                    </span>
                 </div>
 
                 <div className="border-b"></div>

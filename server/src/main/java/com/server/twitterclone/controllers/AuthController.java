@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -75,6 +77,7 @@ public class AuthController {
         user.setUserName(userRegisterRequest.getUserName());
         user.setName(userRegisterRequest.getName());
         user.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
+        user.setCreatedAt(new Date());
         userService.createUser(user);
 
         UsernamePasswordAuthenticationToken authToken =

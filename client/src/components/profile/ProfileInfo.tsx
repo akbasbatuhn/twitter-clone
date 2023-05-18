@@ -1,12 +1,15 @@
 import { FC } from "react";
 
 import { User } from "../../store/user/UserReducer";
+import { changeDateFormat } from "../../utils/dateUtils";
 
 interface ProfileInfoProps {
     user: User;
 }
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ user }) => {
+    const formattedDate = changeDateFormat(user.createdAt);
+
     return (
         <div className="mb-6">
             <div className="flex h-20 mb-2 justify-between">
@@ -35,7 +38,9 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user }) => {
                 <span>{user.bio ? user.bio : ""}</span>
                 <div>
                     <span className="text-gray-500 text-base">
-                        Joined 'Timestamp'
+                        {user.createdAt
+                            ? "Joined " + formattedDate
+                            : "Joined 'Timestamp'"}
                     </span>
                 </div>
                 <div className="flex space-x-12 text-sm">

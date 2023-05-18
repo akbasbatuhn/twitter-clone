@@ -1,3 +1,4 @@
+import { changeDateFormat } from "../../utils/dateUtils";
 import TweetIcons from "./TweetIcons";
 import { Link } from "react-router-dom";
 
@@ -7,11 +8,14 @@ export interface TweetProps {
     userId: number;
     username: string;
     name: string;
+    createdAt: string;
 }
 
 const Tweet = (props: TweetProps) => {
-    const { id, text, username, userId, name } = props;
+    const { id, text, username, userId, name, createdAt } = props;
     const image = false;
+
+    const formattedDate = changeDateFormat(createdAt);
 
     return (
         <article
@@ -33,10 +37,15 @@ const Tweet = (props: TweetProps) => {
                 <div className="flex items-center text-sm">
                     <h4 className="font-bold">{name}</h4>
                     <span className="ml-2 text-gray-dark">
-                        {username ? username : "username"}
+                        {username ? "@" + username : "@username"}
                     </span>
                     <div className="mx-2 bg-gray-dark h-1 w-1 border rounded-full" />
-                    <span className="text-gray-dark">timestamp</span>
+                    {createdAt && (
+                        <span className="text-gray-dark">{formattedDate}</span>
+                    )}
+                    {/* <span className="text-gray-dark">
+                        {createdAt ? createdAt : ""}
+                    </span> */}
                 </div>
                 <span className="mt-2 text-gray-900 text-sm break-words">
                     {text}

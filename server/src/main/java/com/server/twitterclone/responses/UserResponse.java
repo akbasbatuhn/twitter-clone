@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class UserResponse {
     Long userId;
@@ -14,6 +16,8 @@ public class UserResponse {
     @Lob
     @Column(columnDefinition = "text")
     String bio;
+
+    Date createdAt;
 
     // TODO: Add user profile picture
     // TODO: Add user created date
@@ -27,5 +31,6 @@ public class UserResponse {
         this.userName = entity.getUserName();
         this.name = entity.getName();
         this.bio = entity.getBio();
+        this.createdAt = entity.getCreatedAt();
     }
 }

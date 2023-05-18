@@ -8,6 +8,7 @@ import com.server.twitterclone.request.TweetUpdateRequest;
 import com.server.twitterclone.responses.TweetResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,6 +45,7 @@ public class TweetService {
         Tweet newTweet = new Tweet();
         newTweet.setId(newTweetRequest.getId());
         newTweet.setText(newTweetRequest.getText());
+        newTweet.setCreatedAt(new Date());
         newTweet.setUser(user);
 
         return tweetRepository.save(newTweet);

@@ -8,6 +8,7 @@ export type TweetType = {
     text: string;
     userName: string;
     name: string;
+    createdAt: string;
 };
 
 type TweetState = {

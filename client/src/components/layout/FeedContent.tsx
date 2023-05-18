@@ -25,6 +25,7 @@ const FeedContent = () => {
                         userId={tweet.userId}
                         username={tweet.userName}
                         name={tweet.name}
+                        createdAt={tweet.createdAt}
                     />
                 ))}
             </div>
