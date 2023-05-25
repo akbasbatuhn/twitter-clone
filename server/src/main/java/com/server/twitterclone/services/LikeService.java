@@ -5,10 +5,13 @@ import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.repos.LikeRepository;
 import com.server.twitterclone.request.LikeCreateRequest;
+import com.server.twitterclone.responses.LikeResponse;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeService {
@@ -17,28 +20,32 @@ public class LikeService {
     private TweetService tweetService;
 
     public LikeService(LikeRepository likeRepository, UserService userService,
-                       TweetService tweetService) {
+                       @Lazy TweetService tweetService) {
         this.likeRepository = likeRepository;
         this.userService = userService;
         this.tweetService = tweetService;
     }
 
-    public List<Like> getAllLikes(Optional<Long> userId, Optional<Long> tweetId) {
+    public List<LikeResponse> getAllLikes(Optional<Long> userId, Optional<Long> tweetId) {
+        List<Like> likeList;
         if(userId.isPresent() && tweetId.isPresent()) {
-            return likeRepository.findByUserIdAndTweetId(userId.get(), tweetId.get());
+            likeList = likeRepository.findByUserIdAndTweetId(userId.get(), tweetId.get());
         } else if(userId.isPresent()) {
-            return likeRepository.findByUserId(userId.get());
+            likeList = likeRepository.findByUserId(userId.get());
         } else if(tweetId.isPresent()) {
-            return likeRepository.findByTweetId(tweetId.get());
-        } else
-            return likeRepository.findAll();
+            likeList = likeRepository.findByTweetId(tweetId.get());
+        } else {
+            likeList = likeRepository.findAll();
+        }
+
+        return likeList.stream().map(like -> new LikeResponse(like)).collect(Collectors.toList());
     }
 
     public Like getOneLike(Long LikeId) {
         return likeRepository.findById(LikeId).orElse(null);
     }
 
-    public Like createOneLike(LikeCreateRequest request) {
+    public LikeResponse createOneLike(LikeCreateRequest request) {
         User user = userService.getOneUser(request.getUserId());
         Tweet tweet = tweetService.findTweetById(request.getTweetId());
 
@@ -48,7 +55,8 @@ public class LikeService {
             likeToSave.setTweet(tweet);
             likeToSave.setUser(user);
 
-            return likeRepository.save(likeToSave);
+            likeRepository.save(likeToSave);
+            return new LikeResponse(likeToSave);
         }
 
         return null;

@@ -1,10 +1,12 @@
 package com.server.twitterclone.services;
 
+import com.server.twitterclone.entities.Like;
 import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.repos.TweetRepository;
 import com.server.twitterclone.request.TweetCreateRequest;
 import com.server.twitterclone.request.TweetUpdateRequest;
+import com.server.twitterclone.responses.LikeResponse;
 import com.server.twitterclone.responses.TweetResponse;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,14 @@ import java.util.stream.Collectors;
 public class TweetService {
 
     private TweetRepository tweetRepository;
+    private LikeService likeService;
     private UserService userService;
 
-    public TweetService(TweetRepository tweetRepository, UserService userService) {
+    public TweetService(TweetRepository tweetRepository, UserService userService,
+                        LikeService likeService) {
         this.tweetRepository = tweetRepository;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     public List<TweetResponse> getAllTweets(Optional<Long> userId) {
@@ -32,7 +37,10 @@ public class TweetService {
             tweetList = tweetRepository.findAll();
         }
 
-        return tweetList.stream().map(tweet -> new TweetResponse(tweet)).collect(Collectors.toList());
+        return tweetList.stream().map(tweet -> {
+            List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(tweet.getId()));
+            return new TweetResponse(tweet, likes);
+        }).collect(Collectors.toList());
     }
 
     public TweetResponse createTweet(TweetCreateRequest newTweetRequest) {
@@ -49,13 +57,13 @@ public class TweetService {
         newTweet.setUser(user);
 
         tweetRepository.save(newTweet);
-        return new TweetResponse(newTweet);
+        return new TweetResponse(newTweet, null);
     }
 
     public TweetResponse getOneTweet(Long tweetId) {
         Tweet newTweet = tweetRepository.findById(tweetId).orElse(null);
 
-        return new TweetResponse(newTweet);
+        return new TweetResponse(newTweet, null);
     }
 
     public TweetResponse updateOneTweet(Long tweetId, TweetUpdateRequest updateTweet) {
@@ -66,7 +74,9 @@ public class TweetService {
             toUpdate.setText(updateTweet.getText());
             tweetRepository.save(toUpdate);
 
-            return new TweetResponse(toUpdate);
+            List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(toUpdate.getId()));
+
+            return new TweetResponse(toUpdate, likes);
         }
 
         return null;

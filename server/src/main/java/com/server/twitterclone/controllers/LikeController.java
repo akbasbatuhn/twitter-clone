@@ -2,6 +2,7 @@ package com.server.twitterclone.controllers;
 
 import com.server.twitterclone.entities.Like;
 import com.server.twitterclone.request.LikeCreateRequest;
+import com.server.twitterclone.responses.LikeResponse;
 import com.server.twitterclone.services.LikeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +19,12 @@ public class LikeController {
     }
 
     @GetMapping
-    public List<Like> getAllLikes(@RequestParam Optional<Long> userId, @RequestParam Optional<Long> tweetId) {
+    public List<LikeResponse> getAllLikes(@RequestParam Optional<Long> userId, @RequestParam Optional<Long> tweetId) {
         return likeService.getAllLikes(userId, tweetId);
     }
 
     @PostMapping
-    public Like createOneLike(@RequestBody LikeCreateRequest request) {
+    public LikeResponse createOneLike(@RequestBody LikeCreateRequest request) {
         return likeService.createOneLike(request);
     }
 
