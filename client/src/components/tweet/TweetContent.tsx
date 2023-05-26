@@ -22,7 +22,7 @@ const TweetContent = (props: TweetProps) => {
                 <div className="flex flex-col ml-2 text-base -space-y-1">
                     <h4 className="font-bold">{name ? name : "name"}</h4>
                     <span className="text-gray-dark">
-                        {username ? username : "username"}
+                        {username ? "@" + username : "username"}
                     </span>
                 </div>
             </div>

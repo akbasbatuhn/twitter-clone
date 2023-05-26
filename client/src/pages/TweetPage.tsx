@@ -41,9 +41,9 @@ const TweetPage = () => {
                         <SingleTweet
                             id={tweet.id}
                             text={tweet.text}
-                            userId={tweet.user.id}
-                            username={tweet.user.userName}
-                            name={tweet.user.name}
+                            userId={tweet.userId}
+                            username={tweet.userName}
+                            name={tweet.name}
                             createdAt={tweet.createdAt}
                         />
                     </div>
