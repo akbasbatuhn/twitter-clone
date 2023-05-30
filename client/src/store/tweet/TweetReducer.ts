@@ -1,25 +1,7 @@
 import { AnyAction } from "redux";
 
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
-import { TLikes } from "../../types/Tweet";
-
-export type TweetType = {
-    id: number;
-    userId: number;
-    text: string;
-    userName: string;
-    name: string;
-    createdAt: string;
-    tweetLikes: TLikes[];
-};
-
-type TweetState = {
-    readonly isTweetsLoading: boolean;
-    readonly isTweetLoading: boolean;
-    readonly tweets: TweetType[];
-    readonly error: Error | null;
-    readonly tweet: TweetType | null;
-};
+import { TweetState } from "../../types/Reducer";
 
 const INITIAL_STATE: TweetState = {
     isTweetsLoading: false,

@@ -13,17 +13,7 @@ import {
     likeTweetAction,
     unlikeTweetAction,
 } from "../../store/like/LikeAction";
-
-type TLike = {
-    userId: number;
-    tweetId: number;
-};
-
-type SingleTweetIconProps = {
-    userId: number;
-    tweetId: number;
-    isLiked: boolean;
-};
+import { SingleTweetIconProps } from "../../types/Component";
 
 const SingleTweetIcons = (props: SingleTweetIconProps) => {
     const { userId, tweetId, isLiked } = props;

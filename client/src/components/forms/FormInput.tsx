@@ -1,8 +1,6 @@
-import { FC, InputHTMLAttributes } from "react";
+import { FC } from "react";
 
-type FormInputProps = {
-    label: string;
-} & InputHTMLAttributes<HTMLInputElement>;
+import { FormInputProps } from "../../types/Component";
 
 const FormInput: FC<FormInputProps> = ({ label, ...otherProps }) => {
     const value = otherProps.value;

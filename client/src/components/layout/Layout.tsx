@@ -4,12 +4,9 @@ import { useSelector } from "react-redux";
 import SideNavBar from "./SideNavBar";
 import SideBar from "./SideBar";
 import { userIsLoading } from "../../store/user/UserSelector";
+import { LayoutProps } from "../../types/Component";
 
-type Props = {
-    children?: React.ReactNode;
-};
-
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
     const isLoading = useSelector(userIsLoading);
 
     return (

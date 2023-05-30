@@ -16,7 +16,7 @@ import Loading from "../components/loading/Loading";
 import Layout from "../components/layout/Layout";
 import SingleTweet from "../components/tweet/SingleTweet";
 import { isUserLikedThisTweet } from "../utils/isTweetLiked";
-import { TweetType } from "../store/tweet/TweetReducer";
+import { TweetType } from "../types/Tweet";
 
 const TweetPage = () => {
     const { tweetId } = useParams();

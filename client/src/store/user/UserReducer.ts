@@ -1,24 +1,6 @@
 import { AnyAction } from "redux";
 import { USER_ACTION_TYPES } from "./UserTypes";
-
-export type User = {
-    id: number;
-    userName: string;
-    name: string;
-    bio: string;
-    createdAt: string;
-};
-
-type UserState = {
-    readonly currentUserId: number | null;
-    readonly currentUser: User | null;
-    readonly isLoading: boolean;
-    readonly isProfileLoading: boolean;
-    readonly isAuthenticated: boolean;
-    readonly error: Error | null;
-    readonly token: string | null;
-    readonly user: User | null;
-};
+import { UserState } from "../../types/Reducer";
 
 const INITIAL_STATE: UserState = {
     token: localStorage.getItem("accessToken"),

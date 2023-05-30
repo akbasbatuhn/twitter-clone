@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Tweet from "../tweets/Tweet";
 import { selectAllTweets } from "../../store/tweet/TweetSelector";
-import { TweetType } from "../../store/tweet/TweetReducer";
 import { getTweets } from "../../store/tweet/TweetAction";
 import {
     fetchLikedTweetByLoggedInUser,
@@ -11,6 +10,7 @@ import {
 } from "../../store/like/LikeSelector";
 import { isUserLikedThisTweet } from "../../utils/isTweetLiked";
 import Loading from "../loading/Loading";
+import { TweetType } from "../../types/Tweet";
 
 const FeedContent = () => {
     const dispatch = useDispatch();

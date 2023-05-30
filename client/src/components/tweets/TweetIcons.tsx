@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
     LikeIcon,
     LikedIcon,
@@ -7,11 +5,7 @@ import {
     ReplyIcon,
     ShareIcon,
 } from "../../icons/Icons";
-
-type TTweetIconsProps = {
-    isLiked: boolean;
-    likeCount: number;
-};
+import { TTweetIconsProps } from "../../types/Component";
 
 const TweetIcons = (props: TTweetIconsProps) => {
     // TODO: Get like, comment numbers from props

@@ -1,7 +1,6 @@
 import { Dispatch } from "react";
 
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
-import { TweetType } from "./TweetReducer";
 import {
     getAllTweets,
     postTweet,
@@ -9,8 +8,7 @@ import {
     getTweetsLikedByGivenUser,
 } from "../../services/tweet/TweetServices";
 import { getUserIdFromLocalStorage } from "../../utils/localStorageUtils";
-import { GetWithAuthAndBody } from "../../services/http/HttpServices";
-import { TLikes } from "../../types/Tweet";
+import { TLikes, TweetType } from "../../types/Tweet";
 
 const fetchTweetsStart = () => {
     return {
