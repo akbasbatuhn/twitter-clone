@@ -4,18 +4,20 @@ import TweetContent from "./TweetContent";
 import TweetReplies from "./TweetReplies";
 
 const SingleTweet = (props: TweetProps) => {
-    const { id, text, username, userId, name, createdAt } = props;
-
+    const { id, text, username, userId, name, createdAt, isLiked, likeList } =
+        props;
     return (
         <div className="flex flex-col space-y-3">
             <article className="border-gray-extraLight px-4 py-3 w-full">
                 <TweetContent
+                    isLiked={isLiked}
                     id={id}
                     text={text}
                     userId={userId}
                     username={username}
                     name={name}
                     createdAt={createdAt}
+                    likeList={likeList}
                 />
             </article>
             <div>

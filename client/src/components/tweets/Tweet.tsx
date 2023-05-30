@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 import { changeDateFormat } from "../../utils/dateUtils";
 import TweetIcons from "./TweetIcons";
-import { Link } from "react-router-dom";
+import { TLikes } from "../../types/Tweet";
 
 export interface TweetProps {
     id: number;
@@ -9,10 +11,13 @@ export interface TweetProps {
     username: string;
     name: string;
     createdAt: string;
+    isLiked: boolean;
+    likeList: TLikes[];
 }
 
 const Tweet = (props: TweetProps) => {
-    const { id, text, username, userId, name, createdAt } = props;
+    const { id, text, username, userId, name, createdAt, isLiked, likeList } =
+        props;
     const image = false;
 
     const formattedDate = changeDateFormat(createdAt);
@@ -43,9 +48,6 @@ const Tweet = (props: TweetProps) => {
                     {createdAt && (
                         <span className="text-gray-dark">{formattedDate}</span>
                     )}
-                    {/* <span className="text-gray-dark">
-                        {createdAt ? createdAt : ""}
-                    </span> */}
                 </div>
                 <span className="mt-2 text-gray-900 text-sm break-words">
                     {text}
@@ -57,7 +59,7 @@ const Tweet = (props: TweetProps) => {
                         className="my-2 rounded-xl max-h-72 max-w-md"
                     />
                 )}
-                <TweetIcons />
+                <TweetIcons isLiked={isLiked} likeCount={likeList.length} />
             </Link>
         </article>
     );

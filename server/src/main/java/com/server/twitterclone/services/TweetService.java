@@ -63,7 +63,9 @@ public class TweetService {
     public TweetResponse getOneTweet(Long tweetId) {
         Tweet newTweet = tweetRepository.findById(tweetId).orElse(null);
 
-        return new TweetResponse(newTweet, null);
+        List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(newTweet.getId()));
+
+        return new TweetResponse(newTweet, likes);
     }
 
     public TweetResponse updateOneTweet(Long tweetId, TweetUpdateRequest updateTweet) {

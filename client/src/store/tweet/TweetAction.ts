@@ -2,8 +2,15 @@ import { Dispatch } from "react";
 
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
 import { TweetType } from "./TweetReducer";
-import { getAllTweets, postTweet } from "../../services/tweet/TweetServices";
-import { getSingleTweetByTweetId } from "../../services/tweet/TweetServices";
+import {
+    getAllTweets,
+    postTweet,
+    getSingleTweetByTweetId,
+    getTweetsLikedByGivenUser,
+} from "../../services/tweet/TweetServices";
+import { getUserIdFromLocalStorage } from "../../utils/localStorageUtils";
+import { GetWithAuthAndBody } from "../../services/http/HttpServices";
+import { TLikes } from "../../types/Tweet";
 
 const fetchTweetsStart = () => {
     return {
@@ -51,6 +58,20 @@ const getSingleTweetFailed = (error: Error) => {
     };
 };
 
+const getLikedTweetsSuccess = (data: TLikes[]) => {
+    return {
+        type: TWEET_ACTION_TYPES.FETCH_LIKED_TWEETS_SUCCESS,
+        payload: data,
+    };
+};
+
+const getLikedTweetFailed = (error: Error) => {
+    return {
+        type: TWEET_ACTION_TYPES.FETCH_LIKED_TWEETS_FAILED,
+        payload: error,
+    };
+};
+
 export const exitTweetPage = () => {
     return {
         type: TWEET_ACTION_TYPES.EXIT_PAGE,
@@ -66,8 +87,16 @@ export const getTweets =
             const res = await getAllTweets(userId);
             const data: TweetType[] = await res.json();
 
+            const likedTweetsResponse = await getTweetsLikedByGivenUser(
+                getUserIdFromLocalStorage()
+            );
+
+            const likedTweets = await likedTweetsResponse.json();
+
+            dispatch(getLikedTweetsSuccess(likedTweets));
             dispatch(fetchTweetsSuccess(data));
         } catch (error: any) {
+            dispatch(getLikedTweetFailed(error));
             dispatch(fetchTweetsFailed(error));
         }
     };
@@ -93,8 +122,15 @@ export const getTweet =
             const res = await getSingleTweetByTweetId(tweetId);
             const data: TweetType = await res.json();
 
+            const likedTweetsResponse = await getTweetsLikedByGivenUser(
+                getUserIdFromLocalStorage()
+            );
+            const likedTweets = await likedTweetsResponse.json();
+
             dispatch(getSingleTweetSuccess(data));
+            dispatch(getLikedTweetsSuccess(likedTweets));
         } catch (error: any) {
+            dispatch(getLikedTweetFailed(error));
             dispatch(getSingleTweetFailed(error));
         }
     };

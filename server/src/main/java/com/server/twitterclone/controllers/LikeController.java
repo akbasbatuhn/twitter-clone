@@ -2,6 +2,7 @@ package com.server.twitterclone.controllers;
 
 import com.server.twitterclone.entities.Like;
 import com.server.twitterclone.request.LikeCreateRequest;
+import com.server.twitterclone.request.UnlikeTweetRequest;
 import com.server.twitterclone.responses.LikeResponse;
 import com.server.twitterclone.services.LikeService;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +34,8 @@ public class LikeController {
         return likeService.getOneLike(likeId);
     }
 
-    @DeleteMapping("/{likeId}")
-    public void deleteOneLike(@PathVariable Long likeId) {
-        likeService.deleteOneLike(likeId);
+    @DeleteMapping()
+    public void deleteOneLike(@RequestBody UnlikeTweetRequest unlikeTweetRequest) {
+        likeService.deleteOneLike(unlikeTweetRequest);
     }
 }

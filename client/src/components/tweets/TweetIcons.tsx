@@ -1,9 +1,22 @@
 import React from "react";
 
-import { LikeIcon, ReTweetIcon, ReplyIcon, ShareIcon } from "../../icons/Icons";
+import {
+    LikeIcon,
+    LikedIcon,
+    ReTweetIcon,
+    ReplyIcon,
+    ShareIcon,
+} from "../../icons/Icons";
 
-const TweetIcons = () => {
+type TTweetIconsProps = {
+    isLiked: boolean;
+    likeCount: number;
+};
+
+const TweetIcons = (props: TTweetIconsProps) => {
     // TODO: Get like, comment numbers from props
+
+    const { isLiked, likeCount } = props;
 
     return (
         <div>
@@ -15,7 +28,7 @@ const TweetIcons = () => {
                     >
                         <ReplyIcon className="w-5 h-5 group-hover:text-primary-base" />
                     </div>
-                    <span className="group-hover:text-primary-base">7</span>
+                    <span className="group-hover:text-primary-base">0</span>
                 </li>
 
                 <li className="flex items-center space-x-2 text-gray-dark text-sm group">
@@ -25,7 +38,7 @@ const TweetIcons = () => {
                     >
                         <ReTweetIcon className="w-5 h-5 group-hover:text-green-500" />
                     </div>
-                    <span className="group-hover:text-green-500">7</span>
+                    <span className="group-hover:text-green-500">0</span>
                 </li>
 
                 <li className="flex items-center space-x-2 text-gray-dark text-sm group">
@@ -33,9 +46,15 @@ const TweetIcons = () => {
                         className="flex items-center justify-center 
                             w-8 h-8 rounded-full group-hover:bg-pink-50"
                     >
-                        <LikeIcon className="w-5 h-5 group-hover:text-pink-500" />
+                        {isLiked ? (
+                            <LikedIcon className="w-5 h-5 text-pink-500" />
+                        ) : (
+                            <LikeIcon className="w-5 h-5 group-hover:text-pink-500" />
+                        )}
                     </div>
-                    <span className="group-hover:text-pink-500">7</span>
+                    <span className="group-hover:text-pink-500">
+                        {likeCount}
+                    </span>
                 </li>
 
                 <li className="flex items-center space-x-2 text-gray-dark text-sm group">

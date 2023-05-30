@@ -5,10 +5,12 @@ import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.repos.LikeRepository;
 import com.server.twitterclone.request.LikeCreateRequest;
+import com.server.twitterclone.request.UnlikeTweetRequest;
 import com.server.twitterclone.responses.LikeResponse;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +31,8 @@ public class LikeService {
     public List<LikeResponse> getAllLikes(Optional<Long> userId, Optional<Long> tweetId) {
         List<Like> likeList;
         if(userId.isPresent() && tweetId.isPresent()) {
-            likeList = likeRepository.findByUserIdAndTweetId(userId.get(), tweetId.get());
+            likeList = new ArrayList<>();
+            likeList.add(likeRepository.findByUserIdAndTweetId(userId.get(), tweetId.get()));
         } else if(userId.isPresent()) {
             likeList = likeRepository.findByUserId(userId.get());
         } else if(tweetId.isPresent()) {
@@ -49,7 +52,12 @@ public class LikeService {
         User user = userService.getOneUser(request.getUserId());
         Tweet tweet = tweetService.findTweetById(request.getTweetId());
 
+        Like found = likeRepository.findByUserIdAndTweetId(user.getId(), tweet.getId());
+
         if(user != null && tweet != null) {
+            if(found != null) {
+                return new LikeResponse(found);
+            }
             Like likeToSave = new Like();
             likeToSave.setId(request.getId());
             likeToSave.setTweet(tweet);
@@ -62,7 +70,9 @@ public class LikeService {
         return null;
     }
 
-    public void deleteOneLike(Long likeId) {
-        likeRepository.deleteById(likeId);
+    public void deleteOneLike(UnlikeTweetRequest unlikeTweetRequest) {
+        Like like = likeRepository.findByUserIdAndTweetId
+                (unlikeTweetRequest.getUserId(), unlikeTweetRequest.getTweetId());
+        likeRepository.deleteById(like.getId());
     }
 }

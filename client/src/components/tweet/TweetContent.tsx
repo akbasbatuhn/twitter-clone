@@ -5,7 +5,8 @@ import SingleTweetIcons from "./SingleTweetIcons";
 import { changeDateFormat } from "../../utils/dateUtils";
 
 const TweetContent = (props: TweetProps) => {
-    const { id, text, username, userId, name, createdAt } = props;
+    const { id, text, username, userId, name, createdAt, isLiked, likeList } =
+        props;
 
     const formattedDate = changeDateFormat(createdAt);
 
@@ -40,7 +41,9 @@ const TweetContent = (props: TweetProps) => {
 
                 <div className="mb-4 flex space-x-4">
                     <div className="flex space-x-1 text-sm">
-                        <span className="font-bold">likeCount</span>
+                        <span className="font-bold">
+                            {likeList ? likeList.length : 0}
+                        </span>
                         <span className="text-gray-500">Likes</span>
                     </div>
 
@@ -53,7 +56,11 @@ const TweetContent = (props: TweetProps) => {
                 <div className="border-b"></div>
 
                 <div className="w-full">
-                    <SingleTweetIcons />
+                    <SingleTweetIcons
+                        userId={userId}
+                        tweetId={id}
+                        isLiked={isLiked}
+                    />
                 </div>
                 <div className="border-b"></div>
             </div>

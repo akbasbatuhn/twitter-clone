@@ -7,15 +7,29 @@ import {
     selectTweet,
     selectTweetIsLoading,
 } from "../store/tweet/TweetSelector";
+import {
+    fetchLikedTweetByLoggedInUser,
+    selectLikedTweetsLoading,
+} from "../store/like/LikeSelector";
+
 import Loading from "../components/loading/Loading";
 import Layout from "../components/layout/Layout";
 import SingleTweet from "../components/tweet/SingleTweet";
+import { isUserLikedThisTweet } from "../utils/isTweetLiked";
+import { TweetType } from "../store/tweet/TweetReducer";
 
 const TweetPage = () => {
     const { tweetId } = useParams();
     const dispatch = useDispatch();
-    const isLoading = useSelector(selectTweetIsLoading);
-    const tweet = useSelector(selectTweet);
+
+    const isTweetLoading = useSelector(selectTweetIsLoading);
+    const isLikedTweetsLoading = useSelector(selectLikedTweetsLoading);
+    const likedTweetsByLoggedInUser = useSelector(
+        fetchLikedTweetByLoggedInUser
+    );
+    const tweet: TweetType = useSelector(selectTweet);
+
+    const notReadyToRender = isTweetLoading || isLikedTweetsLoading;
 
     useEffect(() => {
         dispatch(getTweet(Number(tweetId)));
@@ -27,10 +41,10 @@ const TweetPage = () => {
 
     return (
         <div>
-            {isLoading ? (
-                <Loading />
-            ) : (
-                <Layout>
+            <Layout>
+                {notReadyToRender ? (
+                    <Loading />
+                ) : (
                     <div>
                         <div className="sticky z-10 top-0 bg-opacity-70 bg-white backdrop-blur-sm">
                             <div className="flex flex-col ml-8 py-4">
@@ -45,10 +59,15 @@ const TweetPage = () => {
                             username={tweet.userName}
                             name={tweet.name}
                             createdAt={tweet.createdAt}
+                            isLiked={isUserLikedThisTweet(
+                                tweet.id,
+                                likedTweetsByLoggedInUser
+                            )}
+                            likeList={tweet.tweetLikes}
                         />
                     </div>
-                </Layout>
-            )}
+                )}
+            </Layout>
         </div>
     );
 };

@@ -197,6 +197,16 @@ export const LikeIcon: React.FC<IconProps> = ({ className }) => {
     );
 };
 
+export const LikedIcon: React.FC<IconProps> = ({ className }) => {
+    return (
+        <Svg className={className}>
+            <g>
+                <path d="M 20.884 13.19 c -1.351 2.48 -4.001 5.12 -8.379 7.67 l -0.503 0.3 l -0.504 -0.3 c -4.379 -2.55 -7.029 -5.19 -8.382 -7.67 c -1.36 -2.5 -1.41 -4.86 -0.514 -6.67 c 0.887 -1.79 2.647 -2.91 4.601 -3.01 c 1.651 -0.09 3.368 0.56 4.798 2.01 c 1.429 -1.45 3.146 -2.1 4.796 -2.01 c 1.954 0.1 3.714 1.22 4.601 3.01 c 0.896 1.81 0.846 4.17 -0.514 6.67 Z"></path>
+            </g>
+        </Svg>
+    );
+};
+
 export const ViewIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <Svg className={className}>

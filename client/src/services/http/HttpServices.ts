@@ -33,3 +33,33 @@ export const GetWithAuth = async (url: string, token: string) => {
         },
     });
 };
+
+export const GetWithAuthAndBody = async (
+    url: string,
+    token: string,
+    body: object
+) => {
+    return await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+        },
+        body: JSON.stringify(body),
+    });
+};
+
+export const DeleteWithAuth = async (
+    url: string,
+    token: string,
+    body: object
+) => {
+    await fetch(url, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+        },
+        body: JSON.stringify(body),
+    });
+};

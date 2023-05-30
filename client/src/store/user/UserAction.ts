@@ -7,7 +7,7 @@ import {
     getUserId,
     registerUser,
 } from "../../services/user/UserServices";
-import { getUserTokenFromLocalStorage } from "../../utils/tokenUtils";
+import { getUserTokenFromLocalStorage } from "../../utils/localStorageUtils";
 import { UserRegister } from "../../types/User";
 import { RegisterResponse } from "../../types/AuthResponse";
 

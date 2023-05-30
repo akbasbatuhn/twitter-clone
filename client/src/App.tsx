@@ -12,7 +12,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 
 import Loading from "./components/loading/Loading";
 import PrivateRoute from "./components/routing/PrivateRoute";
-import { getUserTokenFromLocalStorage } from "./utils/tokenUtils";
+import { getUserTokenFromLocalStorage } from "./utils/localStorageUtils";
 import { loadUser } from "./store/user/UserAction";
 import { selectCurrentUserId } from "./store/user/UserSelector";
 import TweetPage from "./pages/TweetPage";

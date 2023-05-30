@@ -1,6 +1,7 @@
 import { AnyAction } from "redux";
 
 import { TWEET_ACTION_TYPES } from "./TweetTypes";
+import { TLikes } from "../../types/Tweet";
 
 export type TweetType = {
     id: number;
@@ -9,6 +10,7 @@ export type TweetType = {
     userName: string;
     name: string;
     createdAt: string;
+    tweetLikes: TLikes[];
 };
 
 type TweetState = {
