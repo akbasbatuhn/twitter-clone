@@ -4,6 +4,7 @@ import com.server.twitterclone.request.TweetCreateRequest;
 import com.server.twitterclone.request.TweetUpdateRequest;
 import com.server.twitterclone.responses.TweetResponse;
 import com.server.twitterclone.services.TweetService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +44,10 @@ public class TweetController {
     @DeleteMapping("/{tweetId}")
     public void deleteOneTweet(@PathVariable Long tweetId) {
         tweetService.deleteOneTweet(tweetId);
+    }
+
+    @GetMapping("/getReplies/{parentTweetId}")
+    public List<TweetResponse> findReplyTweets(@PathVariable Long parentTweetId) {
+        return tweetService.findReplyTweets(parentTweetId);
     }
 }

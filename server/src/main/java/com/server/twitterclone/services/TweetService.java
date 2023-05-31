@@ -1,6 +1,5 @@
 package com.server.twitterclone.services;
 
-import com.server.twitterclone.entities.Like;
 import com.server.twitterclone.entities.Tweet;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.repos.TweetRepository;
@@ -22,7 +21,8 @@ public class TweetService {
     private LikeService likeService;
     private UserService userService;
 
-    public TweetService(TweetRepository tweetRepository, UserService userService,
+    public TweetService(TweetRepository tweetRepository,
+                        UserService userService,
                         LikeService likeService) {
         this.tweetRepository = tweetRepository;
         this.userService = userService;
@@ -39,7 +39,9 @@ public class TweetService {
 
         return tweetList.stream().map(tweet -> {
             List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(tweet.getId()));
-            return new TweetResponse(tweet, likes);
+            List<TweetResponse> replies = findReplyTweets(tweet.getId());
+
+            return new TweetResponse(tweet, likes, replies);
         }).collect(Collectors.toList());
     }
 
@@ -56,16 +58,24 @@ public class TweetService {
         newTweet.setCreatedAt(new Date());
         newTweet.setUser(user);
 
+        if(newTweetRequest.getParentId() != null) {
+            Tweet tweet = findTweetById(newTweetRequest.getParentId());
+            newTweet.setParent(tweet);
+        }
+
         tweetRepository.save(newTweet);
-        return new TweetResponse(newTweet, null);
+        return new TweetResponse(newTweet, null, null);
     }
 
     public TweetResponse getOneTweet(Long tweetId) {
         Tweet newTweet = tweetRepository.findById(tweetId).orElse(null);
 
-        List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(newTweet.getId()));
+        List<LikeResponse> likes = likeService.getAllLikes(
+                Optional.ofNullable(null), Optional.of(newTweet.getId()));
 
-        return new TweetResponse(newTweet, likes);
+        List<TweetResponse> replies = findReplyTweets(newTweet.getId());
+
+        return new TweetResponse(newTweet, likes, replies);
     }
 
     public TweetResponse updateOneTweet(Long tweetId, TweetUpdateRequest updateTweet) {
@@ -76,9 +86,12 @@ public class TweetService {
             toUpdate.setText(updateTweet.getText());
             tweetRepository.save(toUpdate);
 
-            List<LikeResponse> likes = likeService.getAllLikes(Optional.ofNullable(null), Optional.of(toUpdate.getId()));
+            List<LikeResponse> likes = likeService.getAllLikes(
+                    Optional.ofNullable(null), Optional.of(toUpdate.getId()));
 
-            return new TweetResponse(toUpdate, likes);
+            List<TweetResponse> replies = findReplyTweets(tweet.get().getId());
+
+            return new TweetResponse(toUpdate, likes, replies);
         }
 
         return null;
@@ -90,5 +103,18 @@ public class TweetService {
 
     public Tweet findTweetById(Long tweetId) {
         return tweetRepository.findById(tweetId).orElse(null);
+    }
+
+    public List<TweetResponse> findReplyTweets(Long repliedTweetId) {
+        List<Tweet> tweetList = tweetRepository.findByParentId(repliedTweetId);
+        return tweetList.stream().map(tweet -> {
+            List<LikeResponse> likeList = likeService.getAllLikes(
+                    Optional.ofNullable(null),
+                    Optional.of(tweet.getId()));
+
+            List<TweetResponse> replies = findReplyTweets(tweet.getId());
+
+            return new TweetResponse(tweet, likeList, replies);
+        }).collect(Collectors.toList());
     }
 }

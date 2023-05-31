@@ -14,9 +14,12 @@ public class TweetResponse {
     String text;
     String name;
     List<LikeResponse> tweetLikes;
+    List<TweetResponse> replies;
     Date createdAt;
 
-    public TweetResponse(Tweet entity, List<LikeResponse> likeList) {
+    public TweetResponse(Tweet entity,
+                         List<LikeResponse> likeList,
+                         List<TweetResponse> replies) {
         this.id = entity.getId();
         this.text = entity.getText();
         this.userId = entity.getUser().getId();
@@ -24,5 +27,6 @@ public class TweetResponse {
         this.name = entity.getUser().getName();
         this.createdAt = entity.getCreatedAt();
         this.tweetLikes = likeList;
+        this.replies = replies;
     }
 }

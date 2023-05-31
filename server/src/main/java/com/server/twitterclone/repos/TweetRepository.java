@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findByUserId(Long userId);
+
+    List<Tweet> findByParentId(Long parentId);
 }
