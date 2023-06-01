@@ -53,7 +53,7 @@ public class LikeService {
         Tweet tweet = tweetService.findTweetById(request.getTweetId());
 
         Like found = likeRepository.findByUserIdAndTweetId(user.getId(), tweet.getId());
-        System.out.println(found + " is found like object");
+
         if(found != null) {
             return new LikeResponse(found);
         }
