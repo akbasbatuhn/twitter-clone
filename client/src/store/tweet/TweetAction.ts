@@ -8,7 +8,7 @@ import {
     getTweetsLikedByGivenUser,
 } from "../../services/tweet/TweetServices";
 import { getUserIdFromLocalStorage } from "../../utils/localStorageUtils";
-import { TLikes, TweetType } from "../../types/Tweet";
+import { TLikes, TTweet } from "../../types/Tweet";
 
 const fetchTweetsStart = () => {
     return {
@@ -16,7 +16,7 @@ const fetchTweetsStart = () => {
     };
 };
 
-const fetchTweetsSuccess = (tweets: TweetType[]) => {
+const fetchTweetsSuccess = (tweets: TTweet[]) => {
     return {
         type: TWEET_ACTION_TYPES.FETCH_TWEETS_SUCCESS,
         payload: tweets,
@@ -42,7 +42,7 @@ const getSingleTweetStart = () => {
     };
 };
 
-const getSingleTweetSuccess = (data: TweetType) => {
+const getSingleTweetSuccess = (data: TTweet) => {
     return {
         type: TWEET_ACTION_TYPES.FETCH_TWEET_SUCCESS,
         payload: data,
@@ -83,7 +83,7 @@ export const getTweets =
 
         try {
             const res = await getAllTweets(userId);
-            const data: TweetType[] = await res.json();
+            const data: TTweet[] = await res.json();
 
             const likedTweetsResponse = await getTweetsLikedByGivenUser(
                 getUserIdFromLocalStorage()
@@ -118,7 +118,7 @@ export const getTweet =
 
         try {
             const res = await getSingleTweetByTweetId(tweetId);
-            const data: TweetType = await res.json();
+            const data: TTweet = await res.json();
 
             const likedTweetsResponse = await getTweetsLikedByGivenUser(
                 getUserIdFromLocalStorage()

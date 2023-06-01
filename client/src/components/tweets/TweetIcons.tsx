@@ -10,7 +10,7 @@ import { TTweetIconsProps } from "../../types/Component";
 const TweetIcons = (props: TTweetIconsProps) => {
     // TODO: Get like, comment numbers from props
 
-    const { isLiked, likeCount } = props;
+    const { isLiked, likeCount, replyCount } = props;
 
     return (
         <div>
@@ -22,7 +22,9 @@ const TweetIcons = (props: TTweetIconsProps) => {
                     >
                         <ReplyIcon className="w-5 h-5 group-hover:text-primary-base" />
                     </div>
-                    <span className="group-hover:text-primary-base">0</span>
+                    <span className="group-hover:text-primary-base">
+                        {replyCount}
+                    </span>
                 </li>
 
                 <li className="flex items-center space-x-2 text-gray-dark text-sm group">

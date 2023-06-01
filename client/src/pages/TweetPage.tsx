@@ -15,8 +15,7 @@ import {
 import Loading from "../components/loading/Loading";
 import Layout from "../components/layout/Layout";
 import SingleTweet from "../components/tweet/SingleTweet";
-import { isUserLikedThisTweet } from "../utils/isTweetLiked";
-import { TweetType } from "../types/Tweet";
+import { TTweet } from "../types/Tweet";
 
 const TweetPage = () => {
     const { tweetId } = useParams();
@@ -27,7 +26,7 @@ const TweetPage = () => {
     const likedTweetsByLoggedInUser = useSelector(
         fetchLikedTweetByLoggedInUser
     );
-    const tweet: TweetType = useSelector(selectTweet);
+    const tweet: TTweet = useSelector(selectTweet);
 
     const notReadyToRender = isTweetLoading || isLikedTweetsLoading;
 
@@ -52,19 +51,7 @@ const TweetPage = () => {
                             </div>
                         </div>
 
-                        <SingleTweet
-                            id={tweet.id}
-                            text={tweet.text}
-                            userId={tweet.userId}
-                            username={tweet.userName}
-                            name={tweet.name}
-                            createdAt={tweet.createdAt}
-                            isLiked={isUserLikedThisTweet(
-                                tweet.id,
-                                likedTweetsByLoggedInUser
-                            )}
-                            likeList={tweet.tweetLikes}
-                        />
+                        <SingleTweet data={tweet} />
                     </div>
                 )}
             </Layout>

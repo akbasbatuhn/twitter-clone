@@ -1,93 +1,17 @@
+import { FC } from "react";
+
 import Tweet from "../tweets/Tweet";
 
-const TweetReplies = () => {
+import { ComponentReplyTweetProps } from "../../types/Component";
+import { TTweet } from "../../types/Tweet";
+
+const TweetReplies: FC<ComponentReplyTweetProps> = ({ replies }) => {
     return (
         <div>
             <div>
-                {/* <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                />
-                <Tweet
-                    id={1}
-                    text={"Text"}
-                    userId={1}
-                    username={"username"}
-                    name={"name"}
-                /> */}
+                {replies.map((tweet: TTweet) => (
+                    <Tweet key={tweet.id} data={tweet} />
+                ))}
             </div>
         </div>
     );

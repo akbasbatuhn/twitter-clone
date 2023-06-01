@@ -4,12 +4,13 @@ export type TLikes = {
     tweetId: number;
 };
 
-export type TweetType = {
+export type TTweet = {
     id: number;
     userId: number;
     text: string;
     userName: string;
     name: string;
     createdAt: string;
-    tweetLikes: TLikes[];
+    likes: TLikes[];
+    replies: TTweet[];
 };

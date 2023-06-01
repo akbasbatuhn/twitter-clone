@@ -1,12 +1,15 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-import { TweetProps } from "../tweets/Tweet";
 import SingleTweetIcons from "./SingleTweetIcons";
-import { changeDateFormat } from "../../utils/dateUtils";
 
-const TweetContent = (props: TweetProps) => {
-    const { id, text, username, userId, name, createdAt, isLiked, likeList } =
-        props;
+import { changeDateFormat } from "../../utils/dateUtils";
+import { isUserLikedThisTweet } from "../../utils/isTweetLiked";
+
+import { ComponentTweetProps } from "../../types/Component";
+
+const TweetContent: FC<ComponentTweetProps> = ({ data }) => {
+    const { id, text, userName, userId, name, createdAt, likes } = data;
 
     const formattedDate = changeDateFormat(createdAt);
 
@@ -23,7 +26,7 @@ const TweetContent = (props: TweetProps) => {
                 <div className="flex flex-col ml-2 text-base -space-y-1">
                     <h4 className="font-bold">{name ? name : "name"}</h4>
                     <span className="text-gray-dark">
-                        {username ? "@" + username : "username"}
+                        {userName ? "@" + userName : "username"}
                     </span>
                 </div>
             </div>
@@ -42,7 +45,7 @@ const TweetContent = (props: TweetProps) => {
                 <div className="mb-4 flex space-x-4">
                     <div className="flex space-x-1 text-sm">
                         <span className="font-bold">
-                            {likeList ? likeList.length : 0}
+                            {likes ? likes.length : 0}
                         </span>
                         <span className="text-gray-500">Likes</span>
                     </div>
@@ -59,7 +62,7 @@ const TweetContent = (props: TweetProps) => {
                     <SingleTweetIcons
                         userId={userId}
                         tweetId={id}
-                        isLiked={isLiked}
+                        isLiked={isUserLikedThisTweet(id, likes)}
                     />
                 </div>
                 <div className="border-b"></div>
