@@ -12,11 +12,14 @@ import Tweet from "../tweets/Tweet";
 import Loading from "../loading/Loading";
 
 import { TTweet } from "../../types/Tweet";
+import { isUserLikedThisTweet } from "../../utils/isTweetLiked";
+import { selectCurrentUserId } from "../../store/user/UserSelector";
 
 const FeedContent = () => {
     const dispatch = useDispatch();
     const tweetList: TTweet[] = useSelector(selectAllTweets);
-    const isLikedTweetsLoading = useSelector(selectLikedTweetsLoading);
+    const loggedInUserId: number = useSelector(selectCurrentUserId);
+    const isLikedTweetsLoading: boolean = useSelector(selectLikedTweetsLoading);
     const likedTweetsByLoggedInUser = useSelector(
         fetchLikedTweetByLoggedInUser
     );
@@ -32,7 +35,14 @@ const FeedContent = () => {
                     <Loading />
                 ) : (
                     tweetList.map((tweet: TTweet) => (
-                        <Tweet key={tweet.id} data={tweet} />
+                        <Tweet
+                            key={tweet.id}
+                            data={tweet}
+                            isLiked={isUserLikedThisTweet(
+                                loggedInUserId,
+                                tweet.likes
+                            )}
+                        />
                     ))
                 )}
             </div>

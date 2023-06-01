@@ -1,12 +1,12 @@
 import { TLikes } from "../types/Tweet";
 
 export const isUserLikedThisTweet = (
-    currentTweetId: number,
+    loggedInUserId: number,
     likedTweets: TLikes[]
 ): boolean => {
     let isTweetLiked = false;
     likedTweets.map((tweet) => {
-        if (tweet.tweetId === currentTweetId) {
+        if (tweet.userId === loggedInUserId) {
             isTweetLiked = true;
         }
     });

@@ -1,17 +1,37 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import SingleTweetIcons from "./SingleTweetIcons";
+import { selectCurrentUserId } from "../../store/user/UserSelector";
 
+import TweetIcons from "../tweets/TweetIcons";
+
+import useLikeTweet from "../../hooks/useLikeTweet";
 import { changeDateFormat } from "../../utils/dateUtils";
 import { isUserLikedThisTweet } from "../../utils/isTweetLiked";
 
 import { ComponentTweetProps } from "../../types/Component";
 
 const TweetContent: FC<ComponentTweetProps> = ({ data }) => {
-    const { id, text, userName, userId, name, createdAt, likes } = data;
+    const { id, text, userName, userId, name, createdAt, likes, replies } =
+        data;
+
+    const loggedInUser = useSelector(selectCurrentUserId);
+    const [likeCountState, setLikeCountState] = useState(likes.length);
+    const [replyCountState, setReplyCountState] = useState(replies.length);
+    const [like, unlike] = useLikeTweet(id);
 
     const formattedDate = changeDateFormat(createdAt);
+
+    const likeTweet = () => {
+        like();
+        setLikeCountState(likeCountState + 1);
+    };
+
+    const unlikeTweet = () => {
+        unlike();
+        setLikeCountState(likeCountState - 1);
+    };
 
     return (
         <div>
@@ -44,14 +64,12 @@ const TweetContent: FC<ComponentTweetProps> = ({ data }) => {
 
                 <div className="mb-4 flex space-x-4">
                     <div className="flex space-x-1 text-sm">
-                        <span className="font-bold">
-                            {likes ? likes.length : 0}
-                        </span>
+                        <span className="font-bold">{likeCountState}</span>
                         <span className="text-gray-500">Likes</span>
                     </div>
 
                     <div className="flex space-x-1 text-sm">
-                        <span className="font-bold">bookmarkCount</span>
+                        <span className="font-bold">{0}</span>
                         <span className="text-gray-500">Bookmarks</span>
                     </div>
                 </div>
@@ -59,10 +77,13 @@ const TweetContent: FC<ComponentTweetProps> = ({ data }) => {
                 <div className="border-b"></div>
 
                 <div className="w-full">
-                    <SingleTweetIcons
-                        userId={userId}
-                        tweetId={id}
-                        isLiked={isUserLikedThisTweet(id, likes)}
+                    <TweetIcons
+                        isLiked={isUserLikedThisTweet(loggedInUser, likes)}
+                        likeTweet={likeTweet}
+                        unlikeTweet={unlikeTweet}
+                        showCounts={false}
+                        likeCount={likeCountState}
+                        replyCount={replyCountState}
                     />
                 </div>
                 <div className="border-b"></div>

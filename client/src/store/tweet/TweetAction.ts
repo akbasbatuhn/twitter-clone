@@ -127,8 +127,12 @@ export const getTweet =
 
             dispatch(getSingleTweetSuccess(data));
             dispatch(getLikedTweetsSuccess(likedTweets));
+
+            return data;
         } catch (error: any) {
             dispatch(getLikedTweetFailed(error));
             dispatch(getSingleTweetFailed(error));
+
+            console.error(error);
         }
     };

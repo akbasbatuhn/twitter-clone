@@ -1,16 +1,30 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 import TweetIcons from "./TweetIcons";
 
 import { changeDateFormat } from "../../utils/dateUtils";
-import { isUserLikedThisTweet } from "../../utils/isTweetLiked";
 
-import { ComponentTweetProps } from "../../types/Component";
+import { SimpleTweetComponentProps } from "../../types/Component";
+import useLikeTweet from "../../hooks/useLikeTweet";
 
-const Tweet: FC<ComponentTweetProps> = ({ data }) => {
+const Tweet: FC<SimpleTweetComponentProps> = ({ data, isLiked }) => {
     const { id, text, userName, userId, name, createdAt, likes, replies } =
         data;
+
+    const [likeCountState, setLikeCountState] = useState(likes.length);
+    const [replyCountState, setReplyCountState] = useState(replies.length);
+    const [like, unlike] = useLikeTweet(id);
+
+    const likeTweet = () => {
+        like();
+        setLikeCountState(likeCountState + 1);
+    };
+
+    const unlikeTweet = () => {
+        unlike();
+        setLikeCountState(likeCountState - 1);
+    };
 
     const image = false;
 
@@ -54,9 +68,12 @@ const Tweet: FC<ComponentTweetProps> = ({ data }) => {
                     />
                 )}
                 <TweetIcons
-                    isLiked={isUserLikedThisTweet(id, likes)}
-                    likeCount={likes.length}
-                    replyCount={replies.length}
+                    isLiked={isLiked || false}
+                    likeCount={likeCountState}
+                    replyCount={replyCountState}
+                    showCounts={true}
+                    likeTweet={likeTweet}
+                    unlikeTweet={unlikeTweet}
                 />
             </Link>
         </article>
