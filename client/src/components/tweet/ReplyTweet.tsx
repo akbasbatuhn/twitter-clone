@@ -1,19 +1,29 @@
-import { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import { ChangeEvent, FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { selectCurrentUser } from "../../store/user/UserSelector";
+import { replyTweet, sendTweet } from "../../store/tweet/TweetAction";
 
-const ReplyTweet = () => {
+type TReplyTweetProps = {
+    userId: number;
+    parentTweetId: number;
+};
+
+const ReplyTweet: FC<TReplyTweetProps> = ({ userId, parentTweetId }) => {
     const [textContent, setTextContent] = useState("");
+    const dispatch = useDispatch();
+
     const canSendTweet = textContent.length <= 100 && textContent.length > 0;
 
     // get user profile picture
-    // const loggedInUser = useSelector(selectCurrentUser);
 
     const send = () => {
         // TODO: send to backend
         if (canSendTweet) {
-            // const newTweet = dispatch(sendTweet(userId, textContent));
+            const newTweet = dispatch(
+                replyTweet(userId, textContent, parentTweetId)
+            );
+            console.log(newTweet);
             setTextContent("");
         }
     };

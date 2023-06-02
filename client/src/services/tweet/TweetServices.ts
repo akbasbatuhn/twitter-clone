@@ -52,12 +52,18 @@ export const getSingleTweetByTweetId = (id: number) => {
     // });
 };
 
-export const postTweet = (userId: number, text: string) => {
+export type CreateTweetRequest = {
+    userId: number;
+    text: string;
+    parentId?: number;
+};
+
+export const postTweet = (tweetData: CreateTweetRequest) => {
     const url = "http://localhost:8080/tweets";
     const userToken = getUserTokenFromLocalStorage();
-    const body = { userId, text };
+    // console.log(tweetData);
 
-    return PostWithAuth(url, body, userToken!);
+    return PostWithAuth(url, tweetData, userToken!);
 
     // const res = await fetch("http://localhost:8080/tweets", {
     //     method: "POST",

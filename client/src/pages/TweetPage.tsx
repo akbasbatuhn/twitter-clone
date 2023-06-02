@@ -14,7 +14,7 @@ import {
 
 import Loading from "../components/loading/Loading";
 import Layout from "../components/layout/Layout";
-import SingleTweet from "../components/tweet/SingleTweet";
+import TweetPageContent from "../components/tweet/TweetPageContent";
 import { TTweet } from "../types/Tweet";
 
 const TweetPage = () => {
@@ -51,7 +51,7 @@ const TweetPage = () => {
                             </div>
                         </div>
 
-                        <SingleTweet data={tweet} />
+                        <TweetPageContent data={tweet} />
                     </div>
                 )}
             </Layout>

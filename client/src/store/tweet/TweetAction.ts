@@ -6,6 +6,7 @@ import {
     postTweet,
     getSingleTweetByTweetId,
     getTweetsLikedByGivenUser,
+    CreateTweetRequest,
 } from "../../services/tweet/TweetServices";
 import { getUserIdFromLocalStorage } from "../../utils/localStorageUtils";
 import { TLikes, TTweet } from "../../types/Tweet";
@@ -103,7 +104,13 @@ export const sendTweet =
     (userId: number, text: string) => async (dispatch: Dispatch<any>) => {
         dispatch(sendTweetStart());
         try {
-            const res = await postTweet(userId, text);
+            const body = {
+                userId: userId,
+                text: text,
+                parentId: undefined,
+            } as CreateTweetRequest;
+
+            const res = await postTweet(body);
 
             dispatch(getTweets());
             return res;
@@ -133,6 +140,27 @@ export const getTweet =
             dispatch(getLikedTweetFailed(error));
             dispatch(getSingleTweetFailed(error));
 
+            console.error(error);
+        }
+    };
+
+export const replyTweet =
+    (userId: number, text: string, parentId: number) =>
+    async (dispatch: Dispatch<any>) => {
+        dispatch(getSingleTweetStart());
+
+        try {
+            const body = {
+                userId: userId,
+                text: text,
+                parentId: parentId,
+            } as CreateTweetRequest;
+
+            const res = await postTweet(body);
+            console.log(res);
+
+            // dispatch(getTweet());
+        } catch (error) {
             console.error(error);
         }
     };

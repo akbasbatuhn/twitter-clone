@@ -1,12 +1,15 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
 
 import ReplyTweet from "./ReplyTweet";
 import TweetContent from "./TweetContent";
 import TweetReplies from "./TweetReplies";
 
 import { ComponentTweetProps } from "../../types/Component";
+import { selectCurrentUserId } from "../../store/user/UserSelector";
 
-const SingleTweet: FC<ComponentTweetProps> = ({ data }) => {
+const TweetPageContent: FC<ComponentTweetProps> = ({ data }) => {
+    const loggedInUserId = useSelector(selectCurrentUserId);
     const { replies } = data;
 
     return (
@@ -16,7 +19,10 @@ const SingleTweet: FC<ComponentTweetProps> = ({ data }) => {
             </article>
             <div>
                 <div className="border-b">
-                    <ReplyTweet />
+                    <ReplyTweet
+                        userId={loggedInUserId}
+                        parentTweetId={data.id}
+                    />
                 </div>
                 <div className="w-full">
                     <TweetReplies replies={replies} />
@@ -26,4 +32,4 @@ const SingleTweet: FC<ComponentTweetProps> = ({ data }) => {
     );
 };
 
-export default SingleTweet;
+export default TweetPageContent;
