@@ -1,5 +1,9 @@
 import { getUserTokenFromLocalStorage } from "../../utils/localStorageUtils";
-import { GetWithAuth, PostWithAuth } from "../http/HttpServices";
+import {
+    GetWithAuth,
+    GetWithAuthAndBody,
+    PostWithAuth,
+} from "../http/HttpServices";
 
 export const getAllTweets = async (userId: number) => {
     let url;
@@ -42,9 +46,8 @@ export const postTweet = (tweetData: CreateTweetRequest) => {
 };
 
 export const getTweetsLikedByGivenUser = (userId: number) => {
-    const url = "http://localhost:8080/likes";
+    const url = `http://localhost:8080/likes?userId=${userId}`;
     const userToken = getUserTokenFromLocalStorage();
-    const body = { userId };
 
     return GetWithAuth(url, userToken);
 };
