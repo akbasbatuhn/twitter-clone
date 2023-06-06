@@ -20,6 +20,9 @@ public class User {
     String password;
     String bio;
 
+    @Column(name = "profile_image_id")
+    private String profileImageId;
+
     @Temporal(TemporalType.TIMESTAMP)
     Date createdAt;
 }

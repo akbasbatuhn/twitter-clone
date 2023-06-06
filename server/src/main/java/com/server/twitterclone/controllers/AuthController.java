@@ -3,9 +3,11 @@ package com.server.twitterclone.controllers;
 import com.server.twitterclone.entities.RefreshToken;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.request.RefreshRequest;
+import com.server.twitterclone.request.UserCreateRequest;
 import com.server.twitterclone.request.UserLoginRequest;
 import com.server.twitterclone.request.UserRegisterRequest;
 import com.server.twitterclone.responses.AuthResponse;
+import com.server.twitterclone.responses.UserResponse;
 import com.server.twitterclone.security.JwtTokenProvider;
 import com.server.twitterclone.services.RefreshTokenService;
 import com.server.twitterclone.services.UserService;
@@ -15,13 +17,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,16 +33,15 @@ public class AuthController {
 
     private UserService userService;
 
-    private PasswordEncoder passwordEncoder;
+
 
     private RefreshTokenService refreshTokenService;
 
     public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider,
-                          UserService userService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
+                          UserService userService, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
     }
 
@@ -72,13 +71,14 @@ public class AuthController {
             return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User();
-        user.setEmail(userRegisterRequest.getEmail());
-        user.setUserName(userRegisterRequest.getUserName());
-        user.setName(userRegisterRequest.getName());
-        user.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
-        user.setCreatedAt(new Date());
-        userService.createUser(user);
+        UserCreateRequest request = new UserCreateRequest();
+        request.setEmail(userRegisterRequest.getEmail());
+        request.setUserName(userRegisterRequest.getUserName());
+        request.setName(userRegisterRequest.getName());
+        request.setPassword(userRegisterRequest.getPassword());
+
+        UserResponse response = userService.createUser(request);
+        User user = userService.getOneUser(response.getUserId());
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(
