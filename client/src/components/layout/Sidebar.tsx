@@ -5,8 +5,7 @@ import SearchBar from "../right-side-bar/SearchBar";
 
 const SideBar = () => {
     return (
-        // add -z-10 classname if modal isOpen
-        <aside className="sticky top-0 h-screen">
+        <aside className="sticky top-0 h-screen space-y-4">
             <SearchBar />
             <div className="flex flex-col space-y-4">
                 <Trends />

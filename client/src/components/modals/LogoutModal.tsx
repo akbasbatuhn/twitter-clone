@@ -23,7 +23,8 @@ const LogoutModal = ({ isActive }: LogoutProps) => {
 
     return (
         <button
-            className="fixed bottom-20 px-20 py-2 rounded-xl border border-gray-300 hover:bg-gray-200"
+            className="fixed bottom-20 px-20 py-2 rounded-xl border border-gray-300 hover:bg-gray-200
+            bg-white"
             onClick={logoutFromAccount}
         >
             <div className="flex justify-center">

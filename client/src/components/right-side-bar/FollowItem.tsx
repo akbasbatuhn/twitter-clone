@@ -2,7 +2,7 @@ import React from "react";
 
 const FollowItem = () => {
     return (
-        <div className="flex flex-col hover:bg-gray-100 p-1.5">
+        <div className="flex flex-col hover:bg-gray-100 p-1">
             <div className="flex space-x-20 pl-2 py-2.5">
                 <div className="flex space-x-4">
                     <img
@@ -11,8 +11,8 @@ const FollowItem = () => {
                         className="w-12 h-12 rounded-full"
                     />
 
-                    <div className="flex flex-col">
-                        <span>Name</span>
+                    <div className="flex flex-col text-sm">
+                        <span className="font-bold">Name</span>
                         <span>@username</span>
                     </div>
                 </div>

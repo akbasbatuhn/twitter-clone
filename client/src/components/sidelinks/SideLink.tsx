@@ -36,11 +36,14 @@ const SideLink: React.FC<ISideLinkProps> = ({
                     <div
                         className={`flex items-center 
                     group-hover:bg-primary-light 
-                    group-hover:text-primary-base rounded-full pl-3 pr-8 py-3
+                    group-hover:text-primary-base rounded-full pl-3 pr-10 py-2.5
                     ${isActive ? "text-primary-base" : ""}`}
                     >
                         <Icon />
-                        <span className="ml-4 font-semibold">
+                        <span
+                            className="ml-4 font-medium text-lg
+                        max-[880px]:hidden"
+                        >
                             <p>{name}</p>
                         </span>
                     </div>

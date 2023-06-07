@@ -25,7 +25,7 @@ const UserBox = () => {
                 alt="ProfileImage"
                 className="rounded-full w-11 h-11"
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col max-[880px]:hidden">
                 <span className="font-bold text-md text-black-primary">
                     {isAuthenticated ? user.name : "username"}
                 </span>
@@ -33,7 +33,7 @@ const UserBox = () => {
                     @{isAuthenticated ? user.userName : "username"}
                 </span>
             </div>
-            <div className="font-bold">...</div>
+            <div className="font-bold max-[880px]:hidden">...</div>
             <LogoutModal isActive={isActive} onClose={changeLogoutModalState} />
         </div>
     );

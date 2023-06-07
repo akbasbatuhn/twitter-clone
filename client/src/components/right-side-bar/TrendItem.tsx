@@ -13,10 +13,10 @@ const TrendItem: React.FC<ITrendItemProps> = ({
 }) => {
     return (
         <div>
-            <div className="flex flex-col hover:bg-gray-100 p-4">
-                <span className="text-sm text-gray-500">{trendText}</span>
-                <span className="font-bold">{title}</span>
-                <span className="text-sm text-gray-500">
+            <div className="flex flex-col hover:bg-gray-100 p-2">
+                <span className="text-xs text-gray-500">{trendText}</span>
+                <span className="font-bold text-sm">{title}</span>
+                <span className="text-xs text-gray-500">
                     {tweetCount} Tweets
                 </span>
             </div>

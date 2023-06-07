@@ -4,7 +4,7 @@ const WhoToFollow = () => {
     return (
         <div className="bg-gray-50 flex flex-col space-y-4 rounded-2xl">
             <div className="mt-4 ml-3">
-                <span className="ml-2 font-extrabold text-xl">
+                <span className="ml-2 font-extrabold text-lg">
                     Who To Follow
                 </span>
             </div>

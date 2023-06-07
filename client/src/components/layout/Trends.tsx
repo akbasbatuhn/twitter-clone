@@ -5,7 +5,7 @@ const Trends = () => {
     return (
         <div className="bg-gray-50 flex flex-col space-y-4 rounded-2xl">
             <div className="mt-4 ml-3">
-                <span className="font-extrabold text-2xl">Trends For You</span>
+                <span className="font-extrabold text-lg">Trends For You</span>
             </div>
             <div>
                 <TrendItem
