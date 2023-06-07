@@ -2,6 +2,9 @@ package com.server.twitterclone.services;
 
 import com.server.twitterclone.config.S3Buckets;
 import com.server.twitterclone.entities.User;
+import com.server.twitterclone.exception.FileNotFoundException;
+import com.server.twitterclone.exception.FileTypeNotSupportedException;
+import com.server.twitterclone.exception.UserNotFoundException;
 import com.server.twitterclone.repos.UserRepository;
 import com.server.twitterclone.request.EditUserProfileImageRequest;
 import com.server.twitterclone.request.UserCreateRequest;
@@ -11,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -39,12 +39,12 @@ public class UserService {
 
     public UserResponse createUser(UserCreateRequest request) {
         User user = new User();
+
         user.setName(request.getName());
         user.setUserName(request.getUserName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreatedAt(new Date());
-
         user.setProfileImageId("default_profile_picture");
 
         userRepository.save(user);
@@ -53,23 +53,17 @@ public class UserService {
     }
 
     public User getOneUser(Long userId) {
-        // TODO: custom exception handler
-        return userRepository.findById(userId).orElse(null);
+        return validateGivenUserIdValidAndReturnIfFound(userId);
     }
 
     public UserResponse updateOneUser(Long userId, User newUser) {
-        Optional<User> user = userRepository.findById(userId);
+        User foundUser = validateGivenUserIdValidAndReturnIfFound(userId);
 
-        if(user.isPresent()) {
-            User foundUser = user.get();
+        foundUser.setBio(newUser.getBio());
+        foundUser.setName(newUser.getName());
+        userRepository.save(foundUser);
 
-            foundUser.setBio(newUser.getBio());
-            foundUser.setName(newUser.getName());
-            userRepository.save(foundUser);
-            return new UserResponse(foundUser);
-        }
-
-        return null;
+        return new UserResponse(foundUser);
     }
 
     public void deleteOneUser(Long userId) {
@@ -85,35 +79,44 @@ public class UserService {
     }
 
     public UserResponse changeProfileImage(Long userId, EditUserProfileImageRequest request) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
-
-        uploadUserProfileImage(userId, request.getProfileImageFile());
+        User user = validateGivenUserIdValidAndReturnIfFound(userId);
+        uploadUserProfileImage(user, request.getProfileImageFile());
 
         return new UserResponse(user);
     }
 
-    public void uploadUserProfileImage(Long userId, MultipartFile file) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException());
+    public void uploadUserProfileImage(User user, MultipartFile file) {
         String profileImageId = UUID.randomUUID().toString();
+
+
+        if(file.isEmpty()) {
+            throw new FileNotFoundException("Cannot upload empty file");
+        }
+
+        String fileContentType = file.getContentType();
+        String fileType = fileContentType.split("/")[0];
+        boolean isFileImage = fileType.equals("image");
+        
+        if(!isFileImage) {
+            throw new FileTypeNotSupportedException("You can only upload image files");
+        }
 
         try {
             s3Service.putObject(
                     s3Buckets.getProfile(),
-                    "profile-images/%s/%s".formatted(userId, profileImageId),
+                    "profile-images/%s/%s".formatted(user.getId(), profileImageId),
                     file.getBytes()
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //TODO: Store image to database
+
         user.setProfileImageId(profileImageId);
         userRepository.save(user);
     }
 
     public byte[] getUserProfileImage(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException());
+        User user = validateGivenUserIdValidAndReturnIfFound(userId);
 
         var profileImageId = user.getProfileImageId();
         var key = "profile-images/%s/%s".formatted(userId, profileImageId);
@@ -127,5 +130,12 @@ public class UserService {
                 key
         );
         return profileImage;
+    }
+
+    public User validateGivenUserIdValidAndReturnIfFound(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with given id: %s".formatted(userId)
+                ));
     }
 }
