@@ -53,11 +53,11 @@ public class UserService {
     }
 
     public User getOneUser(Long userId) {
-        return validateGivenUserIdValidAndReturnIfFound(userId);
+        return validateGivenUserExistAndReturnUserIfFound(userId);
     }
 
     public UserResponse updateOneUser(Long userId, User newUser) {
-        User foundUser = validateGivenUserIdValidAndReturnIfFound(userId);
+        User foundUser = validateGivenUserExistAndReturnUserIfFound(userId);
 
         foundUser.setBio(newUser.getBio());
         foundUser.setName(newUser.getName());
@@ -79,7 +79,7 @@ public class UserService {
     }
 
     public UserResponse changeProfileImage(Long userId, EditUserProfileImageRequest request) {
-        User user = validateGivenUserIdValidAndReturnIfFound(userId);
+        User user = validateGivenUserExistAndReturnUserIfFound(userId);
         uploadUserProfileImage(user, request.getProfileImageFile());
 
         return new UserResponse(user);
@@ -96,7 +96,7 @@ public class UserService {
         String fileContentType = file.getContentType();
         String fileType = fileContentType.split("/")[0];
         boolean isFileImage = fileType.equals("image");
-        
+
         if(!isFileImage) {
             throw new FileTypeNotSupportedException("You can only upload image files");
         }
@@ -116,7 +116,7 @@ public class UserService {
     }
 
     public byte[] getUserProfileImage(Long userId) {
-        User user = validateGivenUserIdValidAndReturnIfFound(userId);
+        User user = validateGivenUserExistAndReturnUserIfFound(userId);
 
         var profileImageId = user.getProfileImageId();
         var key = "profile-images/%s/%s".formatted(userId, profileImageId);
@@ -132,7 +132,7 @@ public class UserService {
         return profileImage;
     }
 
-    public User validateGivenUserIdValidAndReturnIfFound(Long userId) {
+    public User validateGivenUserExistAndReturnUserIfFound(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(
                         "User not found with given id: %s".formatted(userId)
