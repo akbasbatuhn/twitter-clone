@@ -31,7 +31,7 @@ const LoginForm = () => {
 
     return (
         <div className="flex flex-col mt-4 px-4 space-y-12 mb-5">
-            <h2 className="font-bold text-xl">Login</h2>
+            <h2 className="font-bold text-xl text-center">Login</h2>
 
             <form className="flex flex-col space-y-4">
                 <FormInput

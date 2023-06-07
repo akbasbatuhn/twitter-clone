@@ -23,7 +23,7 @@ const Login = ({ isActive, onClose }: LoginProps) => {
                 >
                     X
                 </button>
-                <div className="w-full">
+                <div className="w-full space-y-4">
                     <div className="flex justify-center">
                         <TwitterIcon className="w-7 h-7 text-primary-base" />
                     </div>

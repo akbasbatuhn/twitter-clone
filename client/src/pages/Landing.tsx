@@ -42,8 +42,9 @@ const Landing = () => {
                 </div>
                 <div
                     className="lg:col-span-5 sm:col-span-full flex
-                    min-[1024px]:px-8 max-[1024px]:justify-center max-[1024px]:text-center
-                    min-[480px]:mt-48 max-[480px]:mt-8 "
+                    min-[1024px]:px-8 min-[1024px]:mt-32 
+                    max-[1024px]:justify-center max-[1024px]:items-center
+                    min-[480px]:mt-16 max-[480px]:mt-8"
                 >
                     <LandingAuth
                         setLogin={changeLoginModalActiveState}

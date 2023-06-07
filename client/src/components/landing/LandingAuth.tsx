@@ -7,12 +7,16 @@ interface UserAuthProps {
 
 const LandingAuth = ({ setLogin, setRegister }: UserAuthProps) => {
     return (
-        <div className="flex flex-col space-y-24">
+        <div className="flex flex-col space-y-24 items-center">
             <TwitterIcon className="w-12 h-12 text-primary-base" />
-            <h1 className="text-6xl font-black">Happening now</h1>
+            <h1 className="min-[1200px]:text-6xl max-[1200px]:text-5xl font-black">
+                Happening now
+            </h1>
 
             <div className="flex flex-col space-y-8 w-72">
-                <h2 className="text-3xl font-bold">Join Twitter today.</h2>
+                <h2 className="text-3xl font-bold max-[1024px]:text-center">
+                    Join Twitter today.
+                </h2>
                 <button
                     className="bg-primary-base hover:bg-primary-dark text-white rounded-full py-1 px-8 w-full"
                     onClick={setRegister}
@@ -47,7 +51,7 @@ const LandingAuth = ({ setLogin, setRegister }: UserAuthProps) => {
                     .
                 </div>
 
-                <div>
+                <div className="flex flex-col items-center">
                     <span>Already have an account?</span>
                     <button
                         className="border py-1 px-8 bg-white hover:bg-gray-50 text-primary-base rounded-full w-full"
