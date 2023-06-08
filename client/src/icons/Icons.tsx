@@ -256,3 +256,13 @@ export const CloseButtonIcon: React.FC<ISvgProps> = ({ className }) => {
         </Svg>
     );
 };
+
+export const EditImageIcon: React.FC<ISvgProps> = ({ className }) => {
+    return (
+        <Svg className={className}>
+            <g>
+                <path d="M 9.697 3 H 11 v 2 h -0.697 l -3 2 H 5 c -0.276 0 -0.5 0.224 -0.5 0.5 v 11 c 0 0.276 0.224 0.5 0.5 0.5 h 14 c 0.276 0 0.5 -0.224 0.5 -0.5 V 10 h 2 v 8.5 c 0 1.381 -1.119 2.5 -2.5 2.5 H 5 c -1.381 0 -2.5 -1.119 -2.5 -2.5 v -11 C 2.5 6.119 3.619 5 5 5 h 1.697 l 3 -2 Z M 12 10.5 c -1.105 0 -2 0.895 -2 2 s 0.895 2 2 2 s 2 -0.895 2 -2 s -0.895 -2 -2 -2 Z m -4 2 c 0 -2.209 1.791 -4 4 -4 s 4 1.791 4 4 s -1.791 4 -4 4 s -4 -1.791 -4 -4 Z M 17 2 c 0 1.657 -1.343 3 -3 3 v 1 c 1.657 0 3 1.343 3 3 h 1 c 0 -1.657 1.343 -3 3 -3 V 5 c -1.657 0 -3 -1.343 -3 -3 h -1 Z"></path>
+            </g>
+        </Svg>
+    );
+};
