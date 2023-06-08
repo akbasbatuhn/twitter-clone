@@ -1,6 +1,4 @@
-import React from "react";
-
-import { TwitterIcon } from "../../icons/Icons";
+import { CloseButtonIcon, TwitterIcon } from "../../icons/Icons";
 import RegisterForm from "../forms/RegisterForm";
 
 interface RegisterProps {
@@ -21,7 +19,7 @@ const Register = ({ isActive, onClose }: RegisterProps) => {
                     onClick={onClose}
                     className="cursor-pointer text-gray-400 flex justify-start"
                 >
-                    X
+                    <CloseButtonIcon className={"w-5 h-5"} />
                 </button>
                 <div className="w-full">
                     <div className="flex justify-center">

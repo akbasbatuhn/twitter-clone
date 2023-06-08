@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom";
+
 import TweetBox from "../layout/TweetBox";
+import { CloseButtonIcon } from "../../icons/Icons";
 
 interface TweetModalProps {
     isActive: boolean;
@@ -19,7 +21,7 @@ const TweetModal = ({ isActive, onClose }: TweetModalProps) => {
                     onClick={onClose}
                     className="cursor-pointer text-gray-400 flex justify-start"
                 >
-                    X
+                    <CloseButtonIcon className={"w-5 h-5"} />
                 </button>
                 <div className="w-full">
                     <TweetBox closeModal={onClose} />

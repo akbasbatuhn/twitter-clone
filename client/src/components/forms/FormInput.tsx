@@ -7,7 +7,7 @@ const FormInput: FC<FormInputProps> = ({ label, ...otherProps }) => {
 
     return (
         <div>
-            <label className="w-full block border border-gray-200 rounded-lg pt-6 pb-2 px-2 relative">
+            <label className="w-full block border border-gray-300 rounded-lg pt-6 pb-2 px-2 relative">
                 <input className="w-full outline-none peer" {...otherProps} />
                 <div
                     className={`w-full h-full absolute left-2 top-0 flex ${

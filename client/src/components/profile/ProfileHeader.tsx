@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/UserSelector";
-import { User } from "../../store/user/UserReducer";
+import { User } from "../../types/User";
 import { userIsLoading } from "../../store/user/UserSelector";
+import ProfileBanner from "./ProfileBanner";
 
 interface ProfileHeaderProps {
     hasBannerPicture: boolean;
@@ -20,13 +21,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ hasBannerPicture, user }) => {
                     </span>
                 </div>
             </div>
-            <div className="h-48">
-                {hasBannerPicture ? (
-                    <img src="" alt="" className="h-full" />
-                ) : (
-                    <div className="bg-gray-300 h-full"></div>
-                )}
-            </div>
+            <ProfileBanner hasBannerImage={hasBannerPicture} />
         </>
     );
 };

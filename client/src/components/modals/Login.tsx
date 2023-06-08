@@ -1,7 +1,5 @@
-import React from "react";
-
 import LoginForm from "../forms/LoginForm";
-import { TwitterIcon } from "../../icons/Icons";
+import { CloseButtonIcon, TwitterIcon } from "../../icons/Icons";
 
 interface LoginProps {
     isActive: boolean;
@@ -21,7 +19,7 @@ const Login = ({ isActive, onClose }: LoginProps) => {
                     onClick={onClose}
                     className="cursor-pointer text-gray-400 flex justify-start"
                 >
-                    X
+                    <CloseButtonIcon className={"w-5 h-5"} />
                 </button>
                 <div className="w-full space-y-4">
                     <div className="flex justify-center">

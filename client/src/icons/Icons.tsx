@@ -246,3 +246,13 @@ export const SendTweetIcon: React.FC<ISvgProps> = ({ className }) => {
         </Svg>
     );
 };
+
+export const CloseButtonIcon: React.FC<ISvgProps> = ({ className }) => {
+    return (
+        <Svg className={className}>
+            <g>
+                <path d="M 10.59 12 L 4.54 5.96 l 1.42 -1.42 L 12 10.59 l 6.04 -6.05 l 1.42 1.42 L 13.41 12 l 6.05 6.04 l -1.42 1.42 L 12 13.41 l -6.04 6.05 l -1.42 -1.42 L 10.59 12 Z"></path>
+            </g>
+        </Svg>
+    );
+};

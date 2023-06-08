@@ -9,12 +9,14 @@ import ProfileInfo from "../components/profile/ProfileInfo";
 import { exitProfile, getUser } from "../store/user/UserAction";
 import { selectProfileLoading, selectUser } from "../store/user/UserSelector";
 
-import { User } from "../store/user/UserReducer";
+import { User } from "../types/User";
+import { selectCurrentUserId } from "../store/user/UserSelector";
 
 const Profile = () => {
     const { userId } = useParams();
     const dispatch = useDispatch();
 
+    const loggedInUserId: number = useSelector(selectCurrentUserId);
     const isLoading = useSelector(selectProfileLoading);
     const user: User = useSelector(selectUser);
 
@@ -27,6 +29,7 @@ const Profile = () => {
     }, [userId]);
 
     const hasBannerPicture = false;
+    const isLoggedInUsersProfilePage = Number(userId) === loggedInUserId;
 
     return (
         <div>
@@ -39,7 +42,12 @@ const Profile = () => {
                             hasBannerPicture={hasBannerPicture}
                             user={user}
                         />
-                        <ProfileInfo user={user} />
+                        <ProfileInfo
+                            user={user}
+                            isLoggedInUsersProfilePage={
+                                isLoggedInUsersProfilePage
+                            }
+                        />
 
                         <div className="flex h-12 border-b">
                             <button className="hover:bg-gray-200 w-1/4">
