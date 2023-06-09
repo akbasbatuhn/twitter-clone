@@ -1,20 +1,20 @@
 import { ChangeEvent, useState } from "react";
 import { EmojiIcon, GIFIcon, MediaIcon } from "../../icons/Icons";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUserId } from "../../store/user/UserSelector";
 import { sendTweet } from "../../store/tweet/TweetAction";
 
-const TweetBox = ({ closeModal = () => {} }) => {
+type TweetBoxProps = {
+    userId: number;
+};
+
+const TweetBox = ({ userId }: TweetBoxProps) => {
     const [textContent, setTextContent] = useState("");
     const dispatch = useDispatch();
-    const userId = useSelector(selectCurrentUserId);
 
     const send = () => {
-        // TODO: send to backend
         if (textContent.length > 0) {
-            const newTweet = dispatch(sendTweet(userId, textContent));
+            dispatch(sendTweet(userId, textContent));
             setTextContent("");
-            closeModal();
         }
     };
 

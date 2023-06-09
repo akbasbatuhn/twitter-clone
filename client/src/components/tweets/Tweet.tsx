@@ -7,6 +7,7 @@ import { changeDateFormat } from "../../utils/dateUtils";
 
 import { SimpleTweetComponentProps } from "../../types/Component";
 import useLikeTweet from "../../hooks/useLikeTweet";
+import ProfileAvatar from "../profile/ProfileAvatar";
 
 const Tweet: FC<SimpleTweetComponentProps> = ({ data, isLiked }) => {
     const { id, text, userName, userId, name, createdAt, likes, replies } =
@@ -37,9 +38,9 @@ const Tweet: FC<SimpleTweetComponentProps> = ({ data, isLiked }) => {
         >
             <Link to={`/profile/${userId}`}>
                 <img
-                    src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                    src={`http://localhost:8080/users/${userId}/profile-image`}
                     alt="Profile"
-                    className="w-11 h-11 rounded-full"
+                    className="w-11 h-11 rounded-full object-cover"
                 />
             </Link>
 

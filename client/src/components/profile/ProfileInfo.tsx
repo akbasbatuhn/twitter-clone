@@ -4,6 +4,7 @@ import { User } from "../../types/User";
 import { changeDateFormat } from "../../utils/dateUtils";
 import ProfileModal from "../modals/ProfileModal";
 import ProfileAvatar from "./ProfileAvatar";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileInfoProps {
     user: User;
@@ -17,15 +18,22 @@ const ProfileInfo: FC<ProfileInfoProps> = ({
     const [isEditProfileModalActive, setEditProfileModalActive] =
         useState(false);
     const formattedDate = changeDateFormat(user.createdAt);
+    const refresh = () => window.location.reload();
+    const navigate = useNavigate();
 
     const changeEditProfileModalState = () => {
         setEditProfileModalActive(!isEditProfileModalActive);
+        if (isEditProfileModalActive) refresh();
+        // navigate(`/profile/${user.userId}`)
     };
 
     return (
         <div className="mb-6">
             <div className="flex h-20 mb-2 justify-between">
-                <ProfileAvatar className={"w-32 h-32 -top-16"} />
+                <ProfileAvatar
+                    className={"w-32 h-32 -top-16"}
+                    userId={user.userId}
+                />
                 {isLoggedInUsersProfilePage && (
                     <div className="flex items-center mx-4">
                         <button
@@ -37,6 +45,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({
                         <ProfileModal
                             isActive={isEditProfileModalActive}
                             onClose={changeEditProfileModalState}
+                            userId={user.userId}
                         />
                     </div>
                 )}

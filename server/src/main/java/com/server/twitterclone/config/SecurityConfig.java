@@ -82,6 +82,8 @@ public class SecurityConfig{
                         .permitAll()
                         .requestMatchers("/auth/**")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/{userId}/profile-image")
+                        .permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

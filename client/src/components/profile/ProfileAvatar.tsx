@@ -1,8 +1,11 @@
+import { useEffect } from "react";
+
 type ProfileAvatarProps = {
     className: string;
+    userId: number;
 };
 
-const ProfileAvatar = ({ className }: ProfileAvatarProps) => {
+const ProfileAvatar = ({ className, userId }: ProfileAvatarProps) => {
     return (
         <>
             <div className="px-4">
@@ -11,8 +14,8 @@ const ProfileAvatar = ({ className }: ProfileAvatarProps) => {
                         className={`ring-4 ring-white rounded-full absolute ${className}`}
                     >
                         <img
-                            className="rounded-full"
-                            src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                            className="w-32 h-32 rounded-full object-cover"
+                            src={`http://localhost:8080/users/${userId}/profile-image`}
                             alt="User Profile Picture"
                         />
                     </div>

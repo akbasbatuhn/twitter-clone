@@ -1,11 +1,12 @@
 import { Dispatch } from "react";
 
 import { USER_ACTION_TYPES } from "./UserTypes";
-import { User } from "./UserReducer";
+import { User } from "../../types/User";
 import {
     getUserData,
     getUserId,
     registerUser,
+    uploadUserProfileAvatar,
 } from "../../services/user/UserServices";
 import { getUserTokenFromLocalStorage } from "../../utils/localStorageUtils";
 import { UserRegister } from "../../types/User";
@@ -168,3 +169,14 @@ export const getUser = (userId: number) => async (dispatch: Dispatch<any>) => {
         console.error(error);
     }
 };
+
+export const uploadProfileAvatarImage =
+    (userId: number, file: File) => async (dispatch: Dispatch<any>) => {
+        const token: string = getUserTokenFromLocalStorage();
+
+        try {
+            const res = await uploadUserProfileAvatar(userId, token, file);
+        } catch (error) {
+            console.error(error);
+        }
+    };

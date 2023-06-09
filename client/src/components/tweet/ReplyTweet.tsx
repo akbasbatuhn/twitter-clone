@@ -1,8 +1,7 @@
 import { ChangeEvent, FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { selectCurrentUser } from "../../store/user/UserSelector";
-import { replyTweet, sendTweet } from "../../store/tweet/TweetAction";
+import { replyTweet } from "../../store/tweet/TweetAction";
 
 type TReplyTweetProps = {
     userId: number;
@@ -38,8 +37,8 @@ const ReplyTweet: FC<TReplyTweetProps> = ({ userId, parentTweetId }) => {
             <div className="flex flex-col ml-4">
                 <div className="flex space-x-2 pb-2">
                     <img
-                        className="w-14 h-14 rounded-full"
-                        src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                        className="w-14 h-14 rounded-full object-cover"
+                        src={`http://localhost:8080/users/${userId}/profile-image`}
                         alt="profile picture"
                     />
                     <textarea

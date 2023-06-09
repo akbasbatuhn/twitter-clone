@@ -1,7 +1,12 @@
+import { useSelector } from "react-redux";
+
+import { selectCurrentUserId } from "../../store/user/UserSelector";
 import FeedContent from "./FeedContent";
 import TweetBox from "./TweetBox";
 
 const Feed = () => {
+    const userId = useSelector(selectCurrentUserId);
+
     return (
         <main className="flex flex-col">
             <div
@@ -16,11 +21,11 @@ const Feed = () => {
             </div>
             <div className="flex space-x-4 px-4 py-3 border-b border-x-gray-extraLight">
                 <img
-                    src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                    src={`http://localhost:8080/users/${userId}/profile-image`}
                     alt=""
-                    className="w-11 h-11 rounded-full"
+                    className="w-11 h-11 rounded-full object-cover"
                 />
-                <TweetBox />
+                <TweetBox userId={userId} />
             </div>
             <FeedContent />
         </main>

@@ -6,7 +6,7 @@ export type UserRegister = {
 };
 
 export type User = {
-    id: number;
+    userId: number;
     userName: string;
     name: string;
     bio: string;

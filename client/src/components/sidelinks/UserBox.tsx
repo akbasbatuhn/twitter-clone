@@ -21,9 +21,9 @@ const UserBox = () => {
             onClick={changeLogoutModalState}
         >
             <img
-                src="https://pbs.twimg.com/profile_images/1634898170240016385/VxATdpPG_400x400.jpg"
+                src={`http://localhost:8080/users/${user.userId}/profile-image`}
                 alt="ProfileImage"
-                className="rounded-full w-11 h-11"
+                className="rounded-full w-11 h-11 object-cover"
             />
             <div className="flex flex-col max-[880px]:hidden">
                 <span className="font-bold text-md text-black-primary">
