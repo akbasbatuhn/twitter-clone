@@ -4,6 +4,7 @@ import {
     GetWithAuth,
     PostWithAuth,
     PostWithoutAuth,
+    UpdateWithAuth,
     UploadImage,
 } from "../http/HttpServices";
 
@@ -45,6 +46,20 @@ export const uploadUserProfileAvatar = async (
 
     try {
         return await UploadImage(url, token, file);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const updateProfileDetail = async (
+    userId: number,
+    token: string,
+    body: object
+) => {
+    const url = `http://localhost:8080/users/${userId}`;
+
+    try {
+        return await UpdateWithAuth(url, token, body);
     } catch (error) {
         console.log(error);
     }

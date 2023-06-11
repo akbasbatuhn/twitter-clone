@@ -64,6 +64,21 @@ export const DeleteWithAuth = async (
     });
 };
 
+export const UpdateWithAuth = async (
+    url: string,
+    token: string,
+    body: object
+) => {
+    await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+        },
+        body: JSON.stringify(body),
+    });
+};
+
 export const UploadImage = async (url: string, token: string, file: File) => {
     const formData = new FormData();
     formData.append("profileImageFile", file);

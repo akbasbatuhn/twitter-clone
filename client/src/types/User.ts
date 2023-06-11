@@ -12,3 +12,8 @@ export type User = {
     bio: string;
     createdAt: string;
 };
+
+export type UpdateProfileDetailRequest = {
+    bio: string;
+    name: string;
+};

@@ -6,6 +6,7 @@ import com.server.twitterclone.exception.FileNotFoundException;
 import com.server.twitterclone.exception.FileTypeNotSupportedException;
 import com.server.twitterclone.exception.UserNotFoundException;
 import com.server.twitterclone.repos.UserRepository;
+import com.server.twitterclone.request.EditProfileDetailRequest;
 import com.server.twitterclone.request.EditUserProfileImageRequest;
 import com.server.twitterclone.request.UserCreateRequest;
 import com.server.twitterclone.responses.UserResponse;
@@ -56,11 +57,11 @@ public class UserService {
         return validateGivenUserExistAndReturnUserIfFound(userId);
     }
 
-    public UserResponse updateOneUser(Long userId, User newUser) {
+    public UserResponse updateOneUser(Long userId, EditProfileDetailRequest profile) {
         User foundUser = validateGivenUserExistAndReturnUserIfFound(userId);
 
-        foundUser.setBio(newUser.getBio());
-        foundUser.setName(newUser.getName());
+        foundUser.setBio(profile.getBio());
+        foundUser.setName(profile.getName());
         userRepository.save(foundUser);
 
         return new UserResponse(foundUser);

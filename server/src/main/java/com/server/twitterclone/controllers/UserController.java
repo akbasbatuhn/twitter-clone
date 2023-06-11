@@ -1,6 +1,7 @@
 package com.server.twitterclone.controllers;
 
 import com.server.twitterclone.entities.User;
+import com.server.twitterclone.request.EditProfileDetailRequest;
 import com.server.twitterclone.request.EditUserProfileImageRequest;
 import com.server.twitterclone.request.UserCreateRequest;
 import com.server.twitterclone.responses.UserResponse;
@@ -37,8 +38,9 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public UserResponse updateOneUser(@PathVariable Long userId, @RequestBody User newUser) {
-        return userService.updateOneUser(userId, newUser);
+    public UserResponse updateOneUser(@PathVariable Long userId,
+                                      @RequestBody EditProfileDetailRequest profile) {
+        return userService.updateOneUser(userId, profile);
     }
 
     @DeleteMapping("/{userId}")

@@ -1,11 +1,12 @@
 import { Dispatch } from "react";
 
 import { USER_ACTION_TYPES } from "./UserTypes";
-import { User } from "../../types/User";
+import { UpdateProfileDetailRequest, User } from "../../types/User";
 import {
     getUserData,
     getUserId,
     registerUser,
+    updateProfileDetail,
     uploadUserProfileAvatar,
 } from "../../services/user/UserServices";
 import { getUserTokenFromLocalStorage } from "../../utils/localStorageUtils";
@@ -97,6 +98,24 @@ export const exitProfile = () => {
     };
 };
 
+export const updateProfileStart = () => {
+    return {
+        type: USER_ACTION_TYPES.UPDATE_PROFILE_START,
+    };
+};
+
+export const updateProfileSuccess = (data: User) => {
+    return {
+        type: USER_ACTION_TYPES.UPDATE_PROFILE_SUCCESS,
+    };
+};
+
+export const updateProfileFailed = (error: Error) => {
+    return {
+        type: USER_ACTION_TYPES.UPDATE_PROFILE_SUCCESS,
+    };
+};
+
 export const login =
     (username: string, password: string) => async (dispatch: Dispatch<any>) => {
         dispatch(loginStart());
@@ -178,5 +197,25 @@ export const uploadProfileAvatarImage =
             const res = await uploadUserProfileAvatar(userId, token, file);
         } catch (error) {
             console.error(error);
+        }
+    };
+
+export const updateProfileInfo =
+    (userId: number, bio: string, name: string) =>
+    async (dispatch: Dispatch<any>) => {
+        dispatch(updateProfileStart());
+        const token: string = getUserTokenFromLocalStorage();
+        const body = { bio: bio, name: name } as UpdateProfileDetailRequest;
+
+        try {
+            const res = await updateProfileDetail(userId, token, body);
+            const data = res;
+
+            console.log(data);
+
+            // dispatch(updateProfileSuccess(data));
+        } catch (error: any) {
+            console.error(error);
+            dispatch(updateProfileFailed(error));
         }
     };
