@@ -46,6 +46,8 @@ const ProfileInfo: FC<ProfileInfoProps> = ({
                             isActive={isEditProfileModalActive}
                             onClose={changeEditProfileModalState}
                             userId={user.userId}
+                            bio={user.bio}
+                            name={user.name}
                         />
                     </div>
                 )}

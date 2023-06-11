@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 
 import ProfileBanner from "../profile/ProfileBanner";
 import ProfileAvatar from "../profile/ProfileAvatar";
-import ProfileEditForm from "../profile/ProfileEditForm";
 import { CloseButtonIcon, EditImageIcon } from "../../icons/Icons";
-import { uploadProfileAvatarImage } from "../../store/user/UserAction";
+import {
+    updateProfileInfo,
+    uploadProfileAvatarImage,
+} from "../../store/user/UserAction";
+import FormInput from "../forms/FormInput";
 
 type ProfileModalProps = {
     userId: number;
+    bio: string;
+    name: string;
 };
 
 type ModalProps = {
@@ -17,12 +22,37 @@ type ModalProps = {
     onClose: () => void;
 } & ProfileModalProps;
 
-const ProfileModal = ({ isActive, onClose, userId }: ModalProps) => {
-    if (!isActive) return null;
+const defaultEditProfileFormFields = {
+    nameValue: "",
+    bioValue: "",
+};
 
+const ProfileModal = ({ isActive, onClose, userId, name, bio }: ModalProps) => {
+    const [formFields, setFormFields] = useState(defaultEditProfileFormFields);
     const [avatarImage, setAvatarImage] = useState<File>();
     const [bannerImage, setBannerImage] = useState<File>();
+
     const dispatch = useDispatch();
+
+    const { nameValue, bioValue } = formFields;
+
+    useEffect(() => {
+        const profileData = { ...defaultEditProfileFormFields };
+        if (name === null) name = "";
+        if (bio === null) bio = "";
+
+        profileData.nameValue = name;
+        profileData.bioValue = bio;
+
+        setFormFields(profileData);
+    }, []);
+
+    if (!isActive) return <></>;
+
+    const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setFormFields({ ...formFields, [name]: value });
+    };
 
     const onBannerImageChangeHandler = (files: FileList | null) => {
         if (files === null) return;
@@ -65,8 +95,13 @@ const ProfileModal = ({ isActive, onClose, userId }: ModalProps) => {
     const saveProfileInfo = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        //TODO send info to backend
-        dispatch(uploadProfileAvatarImage(userId, avatarImage!));
+        dispatch(
+            updateProfileInfo(userId, formFields.bioValue, formFields.nameValue)
+        );
+
+        if (avatarImage !== undefined)
+            dispatch(uploadProfileAvatarImage(userId, avatarImage));
+
         onClose();
     };
 
@@ -156,7 +191,22 @@ const ProfileModal = ({ isActive, onClose, userId }: ModalProps) => {
                 </div>
 
                 <div>
-                    <ProfileEditForm />
+                    <form className="px-4 space-y-4">
+                        <FormInput
+                            label="Name"
+                            type="text"
+                            onChange={handleFormChange}
+                            name="nameValue"
+                            value={nameValue}
+                        />
+                        <FormInput
+                            label="Bio"
+                            type="text"
+                            onChange={handleFormChange}
+                            name="bioValue"
+                            value={bioValue}
+                        />
+                    </form>
                 </div>
             </div>
         </div>,
