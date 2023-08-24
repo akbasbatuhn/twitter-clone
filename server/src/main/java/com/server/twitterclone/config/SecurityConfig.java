@@ -16,12 +16,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 import com.server.twitterclone.security.JwtAuthenticationEntryPoint;
 import com.server.twitterclone.security.JwtAuthenticationFilter;
 import com.server.twitterclone.services.UserDetailsServiceImpl;
-
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -38,11 +35,6 @@ public class SecurityConfig{
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)

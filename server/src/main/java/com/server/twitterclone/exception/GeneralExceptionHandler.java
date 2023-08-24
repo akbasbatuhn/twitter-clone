@@ -58,4 +58,19 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(apiError, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiError> userAlreadyExistsExceptionHandler(
+            UserAlreadyExistsException exception,
+            HttpServletRequest request
+    ) {
+        ApiError apiError = new ApiError(
+                request.getRequestURI(),
+                exception.getMessage(),
+                HttpStatus.FOUND.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.FOUND);
+    }
 }

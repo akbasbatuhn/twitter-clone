@@ -4,6 +4,7 @@ import com.server.twitterclone.config.S3Buckets;
 import com.server.twitterclone.entities.User;
 import com.server.twitterclone.exception.FileNotFoundException;
 import com.server.twitterclone.exception.FileTypeNotSupportedException;
+import com.server.twitterclone.exception.UserAlreadyExistsException;
 import com.server.twitterclone.exception.UserNotFoundException;
 import com.server.twitterclone.repos.UserRepository;
 import com.server.twitterclone.request.EditProfileDetailRequest;
@@ -19,7 +20,7 @@ import java.util.*;
 
 @Service
 public class UserService {
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final S3Service s3Service;
     private final S3Buckets s3Buckets;
@@ -72,11 +73,17 @@ public class UserService {
     }
 
     public User getOneUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with given email: %s".formatted(email)
+                ));
     }
 
     public User getOneUserByUsername(String username) {
-        return userRepository.findByUserName(username);
+        return userRepository.findByUserName(username)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with given username: %s".formatted(username)
+                ));
     }
 
     public UserResponse changeProfileImage(Long userId, EditUserProfileImageRequest request) {
@@ -138,5 +145,15 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(
                         "User not found with given id: %s".formatted(userId)
                 ));
+    }
+
+    public void checkUserAlreadyExists(String email) {
+        if(checkUserExist(email)) {
+            throw new UserAlreadyExistsException("User already exists");
+        }
+    }
+
+    private boolean checkUserExist(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
