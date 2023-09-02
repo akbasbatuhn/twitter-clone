@@ -31,9 +31,6 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
             UserNotFoundException exception,
             HttpServletRequest request
     ) {
-        System.out.println("Before request URI");
-        System.out.println(request.getRequestURI());
-        System.out.println("After request URI");
         ApiError apiError = new ApiError(
                 request.getRequestURI(),
                 exception.getMessage(),
